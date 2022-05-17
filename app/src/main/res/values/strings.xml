@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MoneyTracking</string>
+    <string name="btn_addExpensive">Добавить</string>
+    <string name="labelExpensiveInputText">Введите сумму расходов</string>
+    <string name="textView_textExpensive">Расход за все время: </string>
+
+</resources>
