@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Money Tracking</string>
-    <string name="btn_addExpensive">Добавить</string>
-    <string name="labelExpensiveInputText">Введите сумму расходов</string>
-    <string name="textView_textExpensive">Расход за все время: </string>
-
+    <string name="btn_add_expensive">Добавить</string>
+    <string name="drop_down_menu_label">Выберите категорию</string>
+    <string name="text_field_sum_expense_label">Введите сумму расхода</string>
+    <string name="text_all_expense">Расход за все время:</string>
 </resources>

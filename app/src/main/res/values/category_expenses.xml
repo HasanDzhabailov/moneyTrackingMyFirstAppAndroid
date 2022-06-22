@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="expenses">
+        <item>Еда</item>
+        <item>Проед</item>
+        <item>Досуг</item>
+        <item>Здоровье</item>
+        <item>Подарки</item>
+        <item>Для дома</item>
+        <item>Одежда</item>
+        <item>Домашние животные</item>
+        <item>Ремонт</item>
+        <item>Машина</item>
+        <item>Долг/Кредиты</item>
+        <item>Коммунальные услуги</item>
+        <item>Аренда жилья</item>
+        <item>Другое</item>
+    </string-array>
+</resources>
