@@ -18,7 +18,7 @@ abstract class MoneyTrackDatabase : RoomDatabase() {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         MoneyTrackDatabase::class.java,
-                        "money_tracker_expensive_table"
+                        "daily_money_expenses_table"
                     ).fallbackToDestructiveMigration()
                         .build()
                     INSTANCE = instance
