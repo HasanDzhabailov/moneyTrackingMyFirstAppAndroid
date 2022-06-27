@@ -4,4 +4,5 @@
     <string name="drop_down_menu_label">Выберите категорию</string>
     <string name="text_field_sum_expense_label">Введите сумму расхода</string>
     <string name="text_all_expense">Расход за все время:</string>
+    <string name="title"><![CDATA[<h3>Расход за все время:</h3>]]></string>
 </resources>

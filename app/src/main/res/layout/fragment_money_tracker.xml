@@ -12,30 +12,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_all_expense"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/menu"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.488"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.86" />
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/menu"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:color="?attr/colorError"
             android:hint="@string/drop_down_menu_label"
+            app:errorIconDrawable="@drawable/mtrl_ic_error"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.36">
+            app:layout_constraintVertical_bias="0.050000012">
 
             <AutoCompleteTextView
                 android:id="@+id/AutoCompleteTextView"
@@ -47,26 +37,30 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/TextFieldSumExpense"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:hint="@string/text_field_sum_expense_label"
+            android:color="?attr/colorError"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/menu"
-            app:layout_constraintVertical_bias="0.07999998"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            app:errorIconDrawable="@drawable/mtrl_ic_error"
+
+            app:layout_constraintVertical_bias="0.06999999">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textSumExpense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                />
+                tools:text="0" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/containedButton"
+            android:id="@+id/btnAddExpenses"
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,7 +70,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TextFieldSumExpense"
-            app:layout_constraintVertical_bias="0.089" />
+            app:layout_constraintVertical_bias="0.050000012" />
+
+        <ScrollView
+            android:layout_width="250dp"
+            android:layout_height="350dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnAddExpenses"
+            app:layout_constraintVertical_bias="0.31">
+
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{moneyTrackViewModel.expensesString}"
+                android:textSize="20sp" />
+        </ScrollView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
