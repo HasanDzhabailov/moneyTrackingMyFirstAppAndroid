@@ -3,12 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/addingSpendingMoney">
-
+    app:startDestination="@id/moneyTrackerFragment">
 
     <fragment
-        android:id="@+id/addingSpendingMoney"
+        android:id="@+id/moneyTrackerFragment"
         android:name="com.example.moneytracking.ui.MoneyTrackerFragment"
         android:label="fragment_adding_spending_money"
         tools:layout="@layout/fragment_money_tracker" />
+    <fragment
+        android:id="@+id/costHistoryFragment"
+        android:name="com.example.moneytracking.ui.CostHistoryFragment"
+        android:label="fragment_cost_history"
+        tools:layout="@layout/fragment_cost_history" />
 </navigation>

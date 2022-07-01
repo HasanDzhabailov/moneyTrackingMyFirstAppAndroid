@@ -7,12 +7,13 @@ import com.example.moneytracking.database.MoneyTrackDatabaseDao
 
 class MoneyTrackerViewModelFactory(
     private val dataSource: MoneyTrackDatabaseDao,
-    private val application: Application) : ViewModelProvider.Factory {
-    @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MoneyTrackerViewModel::class.java)) {
-            return MoneyTrackerViewModel(dataSource, application) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
+    private val application: Application,
+) : ViewModelProvider.Factory {
+	@Suppress("unchecked_cast")
+	override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+		if (modelClass.isAssignableFrom(MoneyTrackerViewModel::class.java)) {
+			return MoneyTrackerViewModel(dataSource, application) as T
+		}
+		throw IllegalArgumentException("Unknown ViewModel class")
+	}
 }

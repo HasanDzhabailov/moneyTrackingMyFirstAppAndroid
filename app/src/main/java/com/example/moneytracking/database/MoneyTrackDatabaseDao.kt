@@ -10,10 +10,10 @@ import org.jetbrains.annotations.NotNull
 
 @Dao
 interface MoneyTrackDatabaseDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(expensive:MoneyTrack)
+	@Insert(onConflict = OnConflictStrategy.IGNORE)
+	suspend fun insert(expensive: MoneyTrack)
 
-    @Query("SELECT * from daily_money_expenses_table")
-    fun getExpenses(): LiveData<List<MoneyTrack>>
+	@Query("SELECT * from daily_money_expenses_table")
+	fun getExpenses(): LiveData<List<MoneyTrack>>
 
 }

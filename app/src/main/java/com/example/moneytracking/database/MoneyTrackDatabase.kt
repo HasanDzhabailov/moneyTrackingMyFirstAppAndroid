@@ -7,24 +7,25 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [MoneyTrack::class], version = 1, exportSchema = false)
 abstract class MoneyTrackDatabase : RoomDatabase() {
-    abstract val moneyTrackDatabaseDao : MoneyTrackDatabaseDao
-    companion object {
-        @Volatile
-        private var INSTANCE: MoneyTrackDatabase? = null
-        fun getInstance(context: Context): MoneyTrackDatabase {
-            synchronized(this) {
-                var instance = INSTANCE
-                if(instance == null) {
-                    instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        MoneyTrackDatabase::class.java,
-                        "daily_money_expenses_table"
-                    ).fallbackToDestructiveMigration()
-                        .build()
-                    INSTANCE = instance
-                }
-                return instance
-            }
-        }
-    }
+	abstract val moneyTrackDatabaseDao: MoneyTrackDatabaseDao
+
+	companion object {
+		@Volatile
+		private var INSTANCE: MoneyTrackDatabase? = null
+		fun getInstance(context: Context): MoneyTrackDatabase {
+			synchronized(this) {
+				var instance = INSTANCE
+				if (instance == null) {
+					instance = Room.databaseBuilder(
+						context.applicationContext,
+						MoneyTrackDatabase::class.java,
+						"daily_money_expenses_table"
+					).fallbackToDestructiveMigration()
+						.build()
+					INSTANCE = instance
+				}
+				return instance
+			}
+		}
+	}
 }
