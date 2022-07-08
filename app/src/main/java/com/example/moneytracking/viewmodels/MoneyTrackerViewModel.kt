@@ -14,13 +14,13 @@ class MoneyTrackerViewModel(dataSource: MoneyTrackDatabaseDao, application: Appl
 	val database = dataSource
 	private val repository: MoneyRepository = MoneyRepository(database)
 
-	private val allExpenses: LiveData<List<MoneyTrack>> = repository.allExpenses
 
 
-	val expensesString = Transformations.map(allExpenses) { expenses ->
-		formatMoney(expenses,
-			application.resources)
-	}
+
+//	val expensesString = Transformations.map(allExpenses) { expenses ->
+//		formatMoney(expenses,
+//			application.resources)
+//	}
 
 
 	fun addExpenses(categoryExpense: String, sumExpense: Long) {

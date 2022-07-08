@@ -14,73 +14,71 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.moneytracking.R
 import com.example.moneytracking.database.MoneyTrackDatabase
 import com.example.moneytracking.databinding.FragmentMoneyTrackerBinding
+import com.example.moneytracking.hideKeyboard
 import com.example.moneytracking.viewmodels.MoneyTrackerViewModel
 import com.example.moneytracking.viewmodels.MoneyTrackerViewModelFactory
 
 
 class MoneyTrackerFragment : Fragment() {
-    fun View.hideKeyboard() {
-        val inputManager =
-            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(windowToken, 0)
-    }
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val binding: FragmentMoneyTrackerBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_money_tracker, container, false)
 
-        val application = requireNotNull(this.activity).application
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?,
+	): View? {
+		// Inflate the layout for this fragment
+		val binding: FragmentMoneyTrackerBinding =
+			DataBindingUtil.inflate(inflater, R.layout.fragment_money_tracker, container, false)
 
-        // Create an instance of the ViewModel Factory.
-        val dataSource = MoneyTrackDatabase.getInstance(application).moneyTrackDatabaseDao
-        val viewModelFactory = MoneyTrackerViewModelFactory(dataSource, application)
+		val application = requireNotNull(this.activity).application
 
-        // Create an drop down menu.
-        val categoryExpenses = resources.getStringArray(R.array.expenses)
-        val adapter =
-            ArrayAdapter(requireContext(), R.layout.list_item_category_expensive, categoryExpenses)
-        binding.AutoCompleteTextView.setAdapter(adapter)
+		// Create an instance of the ViewModel Factory.
+		val dataSource = MoneyTrackDatabase.getInstance(application).moneyTrackDatabaseDao
+		val viewModelFactory = MoneyTrackerViewModelFactory(dataSource, application)
 
-        // Get a reference to the ViewModel associated with this fragment.
-        val moneyTrackViewModel =
-            ViewModelProvider(this, viewModelFactory).get(MoneyTrackerViewModel::class.java)
+		// Create an drop down menu.
+		val categoryExpenses = resources.getStringArray(R.array.expenses)
+		val adapter =
+			ArrayAdapter(requireContext(), R.layout.list_item_category_expensive, categoryExpenses)
+		binding.AutoCompleteTextView.setAdapter(adapter)
 
-        // To use the View Model with data binding, you have to explicitly
-        // give the binding object a reference to it.
-        binding.moneyTrackViewModel = moneyTrackViewModel
+		// Get a reference to the ViewModel associated with this fragment.
+		val moneyTrackViewModel =
+			ViewModelProvider(this, viewModelFactory).get(MoneyTrackerViewModel::class.java)
 
-        // Specify the current activity as the lifecycle owner of the binding.
-        // This is necessary so that the binding can observe LiveData updates.
-        binding.lifecycleOwner = this
+		// To use the View Model with data binding, you have to explicitly
+		// give the binding object a reference to it.
+		binding.moneyTrackViewModel = moneyTrackViewModel
 
-        binding.btnAddExpenses.setOnClickListener {
-            var categoryExpensesString = binding.menu.editText!!.text.toString()
-            var sumExpenseString = binding.textSumExpense.text.toString()
+		// Specify the current activity as the lifecycle owner of the binding.
+		// This is necessary so that the binding can observe LiveData updates.
+		binding.lifecycleOwner = this
 
-            if (TextUtils.isEmpty(categoryExpensesString)) {
-                binding.menu.error = "Заполните поле"
-            } else if (TextUtils.isEmpty(sumExpenseString) || sumExpenseString == "0") {
-                binding.TextFieldSumExpense.error = "Заполните поле"
-            } else {
-                binding.menu.isErrorEnabled = false
-                binding.TextFieldSumExpense.isErrorEnabled = false
+		binding.btnAddExpenses.setOnClickListener {
+			var categoryExpensesString = binding.menu.editText!!.text.toString()
+			var sumExpenseString = binding.textSumExpense.text.toString()
 
-                moneyTrackViewModel.addExpenses(categoryExpensesString, sumExpenseString.toLong())
+			if (TextUtils.isEmpty(categoryExpensesString)) {
+				binding.menu.error = "Заполните поле"
+			} else if (TextUtils.isEmpty(sumExpenseString) || sumExpenseString == "0") {
+				binding.TextFieldSumExpense.error = "Заполните поле"
+			} else {
+				binding.menu.isErrorEnabled = false
+				binding.TextFieldSumExpense.isErrorEnabled = false
 
-                binding.menu.editText?.text?.clear()
-                binding.textSumExpense.text?.clear()
+				moneyTrackViewModel.addExpenses(categoryExpensesString, sumExpenseString.toLong())
 
-                binding.menu.clearFocus()
-                binding.TextFieldSumExpense.clearFocus()
-            }
+				binding.menu.editText?.text?.clear()
+				binding.textSumExpense.text?.clear()
 
-            it.hideKeyboard()
-        }
+				binding.menu.clearFocus()
+				binding.TextFieldSumExpense.clearFocus()
+			}
 
-        return binding.root
-    }
+			it.hideKeyboard()
+		}
+
+		return binding.root
+	}
+
 }

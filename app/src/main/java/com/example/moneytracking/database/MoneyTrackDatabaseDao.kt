@@ -13,7 +13,7 @@ interface MoneyTrackDatabaseDao {
 	@Insert(onConflict = OnConflictStrategy.IGNORE)
 	suspend fun insert(expensive: MoneyTrack)
 
-	@Query("SELECT * from daily_money_expenses_table")
+	@Query("SELECT * from daily_money_expenses_table ORDER BY date_expense DESC")
 	fun getExpenses(): LiveData<List<MoneyTrack>>
 
 }

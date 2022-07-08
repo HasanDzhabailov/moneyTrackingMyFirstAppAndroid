@@ -1,10 +1,13 @@
 package com.example.moneytracking
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.res.Resources
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.text.HtmlCompat
 import com.example.moneytracking.database.MoneyTrack
 import java.text.SimpleDateFormat
@@ -12,7 +15,7 @@ import java.text.SimpleDateFormat
 
 @SuppressLint("SimpleDateFormat")
 fun convertLongToDateString(systemTime: Long): String {
-	return SimpleDateFormat("'Дата:' MM-dd-yyyy HH:mm")
+	return SimpleDateFormat("MM-dd-yyyy HH:mm")
 		.format(systemTime).toString()
 }
 
@@ -35,3 +38,8 @@ fun formatMoney(nights: List<MoneyTrack>, resources: Resources): Spanned {
 	}
 }
 
+fun View.hideKeyboard() {
+	val inputManager =
+		context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+	inputManager.hideSoftInputFromWindow(windowToken, 0)
+}

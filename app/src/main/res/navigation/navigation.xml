@@ -8,11 +8,11 @@
     <fragment
         android:id="@+id/moneyTrackerFragment"
         android:name="com.example.moneytracking.ui.MoneyTrackerFragment"
-        android:label="fragment_adding_spending_money"
+        android:label="Главная"
         tools:layout="@layout/fragment_money_tracker" />
     <fragment
         android:id="@+id/costHistoryFragment"
         android:name="com.example.moneytracking.ui.CostHistoryFragment"
-        android:label="fragment_cost_history"
+        android:label="История расходов"
         tools:layout="@layout/fragment_cost_history" />
 </navigation>
