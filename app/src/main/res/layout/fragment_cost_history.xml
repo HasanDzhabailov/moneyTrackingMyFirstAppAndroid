@@ -6,12 +6,12 @@
     <data>
         <variable
             name="costHistoryViewModel"
-            type="com.example.moneytracking.viewmodels.CostHistoryViewModel" />
+            type="com.example.moneytracking.viewmodels.costhistory.CostHistoryViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="@dimen/marginBottomAndHeightNavigation"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView

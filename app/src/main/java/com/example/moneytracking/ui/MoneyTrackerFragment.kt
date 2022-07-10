@@ -1,22 +1,24 @@
 package com.example.moneytracking.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableLong
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.moneytracking.R
 import com.example.moneytracking.database.MoneyTrackDatabase
 import com.example.moneytracking.databinding.FragmentMoneyTrackerBinding
 import com.example.moneytracking.hideKeyboard
-import com.example.moneytracking.viewmodels.MoneyTrackerViewModel
-import com.example.moneytracking.viewmodels.MoneyTrackerViewModelFactory
+import com.example.moneytracking.viewmodels.moneytrack.MoneyTrackerViewModel
+import com.example.moneytracking.viewmodels.moneytrack.MoneyTrackerViewModelFactory
+import kotlinx.android.synthetic.main.cost_history_item.*
+import kotlinx.coroutines.coroutineScope
 
 
 class MoneyTrackerFragment : Fragment() {
@@ -78,7 +80,15 @@ class MoneyTrackerFragment : Fragment() {
 			it.hideKeyboard()
 		}
 
+		var allSumExpense = 0L
+		moneyTrackViewModel.sumExpense.observe(viewLifecycleOwner) { sumExpense ->
+			allSumExpense = sumExpense ?: 0L
+			binding.textAllSum.text = "Расходы за все время: $allSumExpense"
+		}
+
+
 		return binding.root
 	}
+
 
 }

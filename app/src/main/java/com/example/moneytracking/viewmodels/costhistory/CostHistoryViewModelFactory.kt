@@ -1,18 +1,17 @@
-package com.example.moneytracking.viewmodels
+package com.example.moneytracking.viewmodels.costhistory
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.moneytracking.database.MoneyTrackDatabaseDao
 
-class MoneyTrackerViewModelFactory(
-    private val dataSource: MoneyTrackDatabaseDao,
-    private val application: Application,
+
+class CostHistoryViewModelFactory(
+	private val dataSource: MoneyTrackDatabaseDao
 ) : ViewModelProvider.Factory {
 	@Suppress("unchecked_cast")
 	override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-		if (modelClass.isAssignableFrom(MoneyTrackerViewModel::class.java)) {
-			return MoneyTrackerViewModel(dataSource, application) as T
+		if (modelClass.isAssignableFrom(CostHistoryViewModel::class.java)) {
+			return CostHistoryViewModel(dataSource) as T
 		}
 		throw IllegalArgumentException("Unknown ViewModel class")
 	}

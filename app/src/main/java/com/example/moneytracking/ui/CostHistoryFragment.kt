@@ -14,8 +14,8 @@ import com.example.moneytracking.database.MoneyTrackDatabase
 import com.example.moneytracking.databinding.CostHistoryAdapter
 
 import com.example.moneytracking.databinding.FragmentCostHistoryBinding
-import com.example.moneytracking.viewmodels.CostHistoryViewModel
-import com.example.moneytracking.viewmodels.CostHistoryViewModelFactory
+import com.example.moneytracking.viewmodels.costhistory.CostHistoryViewModel
+import com.example.moneytracking.viewmodels.costhistory.CostHistoryViewModelFactory
 
 class CostHistoryFragment : Fragment() {
 
