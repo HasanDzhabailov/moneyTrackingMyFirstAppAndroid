@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [MoneyTrack::class], version = 1, exportSchema = false)
+
 abstract class MoneyTrackDatabase : RoomDatabase() {
 	abstract val moneyTrackDatabaseDao: MoneyTrackDatabaseDao
 

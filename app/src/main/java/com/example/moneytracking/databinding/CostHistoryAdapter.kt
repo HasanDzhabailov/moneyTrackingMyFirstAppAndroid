@@ -1,5 +1,6 @@
 package com.example.moneytracking.databinding
 
+import android.text.TextUtils.replace
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

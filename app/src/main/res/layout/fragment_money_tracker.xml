@@ -20,7 +20,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:color="?attr/colorError"
-            android:fontFamily="@font/open_sans_condensed_bold"
+            android:fontFamily="@font/roboto_medium"
             android:hint="@string/drop_down_menu_label"
 
             app:errorIconDrawable="@drawable/mtrl_ic_error"
@@ -35,7 +35,7 @@
                 android:id="@+id/AutoCompleteTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_condensed_bold"
+                android:fontFamily="@font/roboto_medium"
                 android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -45,8 +45,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_condensed_bold"
             android:color="?attr/colorError"
+            android:fontFamily="@font/roboto_medium"
             android:hint="@string/text_field_sum_expense_label"
             app:errorIconDrawable="@drawable/mtrl_ic_error"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -60,8 +60,8 @@
                 android:id="@+id/textSumExpense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
                 android:inputType="number"
-                android:fontFamily="@font/open_sans_condensed_bold"
                 tools:text="0" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -71,8 +71,8 @@
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
             android:text="@string/btn_add_expensive"
-            android:fontFamily="@font/open_sans_condensed_bold"
             app:icon="@drawable/ic_add_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +84,7 @@
             android:id="@+id/textAllSum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_condensed_bold"
+            android:fontFamily="@font/roboto_medium"
             android:text="5000"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -93,6 +93,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnAddExpenses"
             app:layout_constraintVertical_bias="0.06999999" />
+
+        <TextView
+            android:id="@+id/textToDaySum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/roboto_medium"
+            android:text="4000"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textAllSum"
+            app:layout_constraintVertical_bias="0.060000002" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

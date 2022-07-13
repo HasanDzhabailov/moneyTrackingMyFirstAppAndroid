@@ -7,7 +7,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.moneytracking.database.MoneyTrack
 import com.example.moneytracking.database.MoneyTrackDatabaseDao
-import com.example.moneytracking.formatMoney
+
 import com.example.moneytracking.repository.MoneyRepository
 
 class CostHistoryViewModel (dataSource: MoneyTrackDatabaseDao) :

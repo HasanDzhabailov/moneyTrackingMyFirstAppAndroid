@@ -7,7 +7,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.moneytracking.database.MoneyTrack
 import com.example.moneytracking.database.MoneyTrackDatabase
 import com.example.moneytracking.database.MoneyTrackDatabaseDao
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before

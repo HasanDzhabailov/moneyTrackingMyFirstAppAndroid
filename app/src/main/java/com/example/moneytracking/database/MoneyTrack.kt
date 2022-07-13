@@ -1,9 +1,9 @@
 package com.example.moneytracking.database
 
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
+
+
 
 
 @Entity(tableName = "daily_money_expenses_table")
@@ -18,5 +18,5 @@ data class MoneyTrack(
 	val sumExpense: Long = 0,
 
 	@ColumnInfo(name = "date_expense")
-	val dateExpense: Long = System.currentTimeMillis(),
+	val dateExpense: Long =  System.currentTimeMillis(),
 )

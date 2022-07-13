@@ -19,4 +19,6 @@ interface MoneyTrackDatabaseDao {
 	@Query("SELECT SUM(sum_expense) from daily_money_expenses_table")
 	 fun getSum():LiveData<Long>
 
+	@Query("SELECT SUM(sum_expense) from daily_money_expenses_table WHERE  date_expense BETWEEN :startPeriod AND :endPeriod  ")
+	fun getSumPeriodOfTime(startPeriod:Long,endPeriod:Long):LiveData<Long>
 }

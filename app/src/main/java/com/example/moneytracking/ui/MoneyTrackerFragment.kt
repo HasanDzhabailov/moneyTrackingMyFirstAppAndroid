@@ -6,19 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableLong
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
-import com.example.moneytracking.R
+import com.example.moneytracking.*
 import com.example.moneytracking.database.MoneyTrackDatabase
 import com.example.moneytracking.databinding.FragmentMoneyTrackerBinding
-import com.example.moneytracking.hideKeyboard
+
 import com.example.moneytracking.viewmodels.moneytrack.MoneyTrackerViewModel
 import com.example.moneytracking.viewmodels.moneytrack.MoneyTrackerViewModelFactory
 import kotlinx.android.synthetic.main.cost_history_item.*
 import kotlinx.coroutines.coroutineScope
+import java.util.*
 
 
 class MoneyTrackerFragment : Fragment() {
@@ -85,7 +87,13 @@ class MoneyTrackerFragment : Fragment() {
 			allSumExpense = sumExpense ?: 0L
 			binding.textAllSum.text = "Расходы за все время: $allSumExpense"
 		}
-
+		var toDaySumExpense = 0L
+		moneyTrackViewModel.sumExpenseToDay.observe(viewLifecycleOwner) { sumExpenseToDay ->
+			toDaySumExpense = sumExpenseToDay ?: 0L
+			binding.textToDaySum.text = "Расходы за текущий день: $toDaySumExpense"
+		}
+//	Toast.makeText(requireContext(), convertLongToDateString(getStartYear()) +"  " + convertLongToDateString(
+//		getEndYear()) ,Toast.LENGTH_LONG).show()
 
 		return binding.root
 	}
