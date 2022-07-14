@@ -82,18 +82,64 @@ class MoneyTrackerFragment : Fragment() {
 			it.hideKeyboard()
 		}
 
-		var allSumExpense = 0L
-		moneyTrackViewModel.sumExpense.observe(viewLifecycleOwner) { sumExpense ->
-			allSumExpense = sumExpense ?: 0L
-			binding.textAllSum.text = "Расходы за все время: $allSumExpense"
+		var toDaySumExpenseGl = 0L
+		moneyTrackViewModel.sumExpenseToDay.observe(viewLifecycleOwner) { sumExpense ->
+			toDaySumExpenseGl = sumExpense ?: 0L
+			binding.textAllSum.text = "Расходы за текущий день: $toDaySumExpenseGl ₽"
 		}
-		var toDaySumExpense = 0L
-		moneyTrackViewModel.sumExpenseToDay.observe(viewLifecycleOwner) { sumExpenseToDay ->
-			toDaySumExpense = sumExpenseToDay ?: 0L
-			binding.textToDaySum.text = "Расходы за текущий день: $toDaySumExpense"
+		fun getToAllExpense() {
+			var allSumExpense = 0L
+			moneyTrackViewModel.sumExpense.observe(viewLifecycleOwner) { sumExpense ->
+				allSumExpense = sumExpense ?: 0L
+				binding.textAllSum.text = "Расходы за все время: $allSumExpense ₽"
+			}
 		}
-//	Toast.makeText(requireContext(), convertLongToDateString(getStartYear()) +"  " + convertLongToDateString(
-//		getEndYear()) ,Toast.LENGTH_LONG).show()
+
+		fun getToDayExpense(){
+			var toDaySumExpense = 0L
+			moneyTrackViewModel.sumExpenseToDay.observe(viewLifecycleOwner) { sumExpense ->
+				toDaySumExpense = sumExpense ?: 0L
+				binding.textAllSum.text = "Расходы за текущий день: $toDaySumExpense ₽"
+			}
+		}
+		fun getToWeekExpense(){
+			var toWeekSumExpense = 0L
+			moneyTrackViewModel.sumExpenseToWeek.observe(viewLifecycleOwner) { sumExpense ->
+				toWeekSumExpense = sumExpense ?: 0L
+				binding.textAllSum.text = "Расходы за неделю: $toWeekSumExpense ₽"
+			}
+		}
+		fun getToMonthExpense(){
+			var toMonthSumExpense = 0L
+			moneyTrackViewModel.sumExpenseToMonth.observe(viewLifecycleOwner) { sumExpense ->
+				toMonthSumExpense = sumExpense ?: 0L
+				binding.textAllSum.text = "Расходы за месяц: $toMonthSumExpense ₽"
+			}
+		}
+		fun getToYearExpense(){
+			var toYearSumExpense = 0L
+			moneyTrackViewModel.sumExpenseToYear.observe(viewLifecycleOwner) { sumExpense ->
+				toYearSumExpense = sumExpense ?: 0L
+				binding.textAllSum.text = "Расходы за год: $toYearSumExpense ₽"
+			}
+		}
+
+		binding.btnSelectionToDay.setOnClickListener{
+			getToDayExpense()
+		}
+		binding.btnSelectionToWeek.setOnClickListener{
+			getToWeekExpense()
+		}
+		binding.btnSelectionToMonth.setOnClickListener{
+			getToMonthExpense()
+		}
+		binding.btnSelectionToYear.setOnClickListener{
+			getToYearExpense()
+		}
+		binding.btnAllSumExpense.setOnClickListener {
+			getToAllExpense()
+		}
+
 
 		return binding.root
 	}

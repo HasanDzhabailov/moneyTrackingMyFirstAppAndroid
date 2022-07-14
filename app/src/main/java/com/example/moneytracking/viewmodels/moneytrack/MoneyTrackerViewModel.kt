@@ -14,8 +14,9 @@ class MoneyTrackerViewModel(dataSource: MoneyTrackDatabaseDao, application: Appl
 	private val repository: MoneyRepository = MoneyRepository(database)
 	val sumExpense: LiveData<Long> = repository.getSumExpenses()
 	val sumExpenseToDay:LiveData<Long> = repository.getSumExpensesToDay()
-
-
+	val sumExpenseToWeek:LiveData<Long> = repository.getSumExpensesToWeek()
+	val sumExpenseToMonth:LiveData<Long> = repository.getSumExpensesToMonth()
+	val sumExpenseToYear:LiveData<Long> = repository.getSumExpensesToYear()
 	fun addExpenses(categoryExpense: String, sumExpense: Long) {
 		viewModelScope.launch {
 			val newExpense = MoneyTrack(categoryExpense = categoryExpense, sumExpense = sumExpense)
