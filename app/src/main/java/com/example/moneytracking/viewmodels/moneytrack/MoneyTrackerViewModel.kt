@@ -2,6 +2,7 @@ package com.example.moneytracking.viewmodels.moneytrack
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.moneytracking.database.Category_sum
 import com.example.moneytracking.database.MoneyTrack
 import com.example.moneytracking.database.MoneyTrackDatabaseDao
 
@@ -12,7 +13,7 @@ class MoneyTrackerViewModel(dataSource: MoneyTrackDatabaseDao, application: Appl
 	AndroidViewModel(application) {
 	val database = dataSource
 	private val repository: MoneyRepository = MoneyRepository(database)
-	val sumExpense: LiveData<Long> = repository.getSumExpenses()
+	val sumExpense: LiveData<List<Category_sum>> = repository.allSumExpenses
 	val sumExpenseToDay:LiveData<Long> = repository.getSumExpensesToDay()
 	val sumExpenseToWeek:LiveData<Long> = repository.getSumExpensesToWeek()
 	val sumExpenseToMonth:LiveData<Long> = repository.getSumExpensesToMonth()

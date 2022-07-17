@@ -1,5 +1,6 @@
 package com.example.moneytracking.ui
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -8,19 +9,22 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ObservableLong
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.moneytracking.*
 import com.example.moneytracking.database.MoneyTrackDatabase
 import com.example.moneytracking.databinding.FragmentMoneyTrackerBinding
-
 import com.example.moneytracking.viewmodels.moneytrack.MoneyTrackerViewModel
 import com.example.moneytracking.viewmodels.moneytrack.MoneyTrackerViewModelFactory
-import kotlinx.android.synthetic.main.cost_history_item.*
-import kotlinx.coroutines.coroutineScope
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.utils.ColorTemplate
+import com.github.mikephil.charting.utils.EntryXComparator
+import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MoneyTrackerFragment : Fragment() {
@@ -88,10 +92,48 @@ class MoneyTrackerFragment : Fragment() {
 			binding.textAllSum.text = "Расходы за текущий день: $toDaySumExpenseGl ₽"
 		}
 		fun getToAllExpense() {
-			var allSumExpense = 0L
+
 			moneyTrackViewModel.sumExpense.observe(viewLifecycleOwner) { sumExpense ->
-				allSumExpense = sumExpense ?: 0L
-				binding.textAllSum.text = "Расходы за все время: $allSumExpense ₽"
+				if(sumExpense.isNotEmpty()){
+				val pieChartSum = binding.piechart
+				val entries: MutableList<PieEntry> = ArrayList()
+				Collections.sort(entries, EntryXComparator())
+
+				sumExpense.forEach { i ->
+					entries.add(PieEntry(i.sumExpense.toFloat(), i.categoryExpense))
+				}
+
+				val pieDataSet = PieDataSet(entries, null)
+				pieDataSet.setColors(*ColorTemplate.COLORFUL_COLORS + ColorTemplate.MATERIAL_COLORS + ColorTemplate.JOYFUL_COLORS)
+				pieDataSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
+				pieDataSet.valueLinePart1OffsetPercentage = 15f
+				pieDataSet.valueLinePart1Length = 0.1f
+				pieDataSet.valueLinePart2Length = 0.1f
+				pieDataSet.valueTextColor = Color.BLACK
+				pieDataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
+				val pieData = PieData(pieDataSet)
+				pieData.setValueTextSize(14f)
+				pieData.setValueTextColor(Color.BLACK)
+					pieChartSum.setEntryLabelColor(Color.BLACK)
+//					pieChartSum.isDrawHoleEnabled = false
+					pieChartSum.transparentCircleRadius = 55f
+					pieChartSum.holeRadius = 55f
+					pieChartSum.setCenterTextSize(5f)
+					pieChartSum.setDrawCenterText(true)
+					pieChartSum.description.isEnabled = false
+					pieChartSum.legend.formSize = 16f
+					pieChartSum.legend.textColor = Color.BLACK
+					pieChartSum.legend.textSize = 16f
+//					pieChartSum.legend.form = Legend.LegendForm.CIRCLE
+					pieChartSum.legend.xEntrySpace = 3f
+					pieChartSum.legend.yEntrySpace = 3f
+					pieChartSum.legend.isWordWrapEnabled = true
+					pieChartSum.data = pieData
+					pieChartSum.invalidate()
+				}
+				else{
+					Toast.makeText(requireContext(),"Нет данных", Toast.LENGTH_LONG).show()
+				}
 			}
 		}
 
@@ -139,6 +181,9 @@ class MoneyTrackerFragment : Fragment() {
 		binding.btnAllSumExpense.setOnClickListener {
 			getToAllExpense()
 		}
+
+
+
 
 
 		return binding.root
