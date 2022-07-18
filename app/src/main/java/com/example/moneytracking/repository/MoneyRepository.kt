@@ -9,22 +9,17 @@ import java.time.Month
 
 class MoneyRepository(private val moneyTrackDao: MoneyTrackDatabaseDao) {
 	val allExpenses: LiveData<List<MoneyTrack>> = moneyTrackDao.getExpenses()
-	val allSumExpenses: LiveData<List<Category_sum>> = moneyTrackDao.getSum()
+	fun getSumCategoryExpenses(startPeriod:Long, endPeriod:Long):LiveData<List<Category_sum>>{
+		return moneyTrackDao.getSum(startPeriod, endPeriod)
+	}
+
 //	 fun getSumExpenses(): LiveData<Long> {
 //		return  moneyTrackDao.getSum()
 //	}
-	fun getSumExpensesToDay():LiveData<Long>{
-		return moneyTrackDao.getSumPeriodOfTime(getStartDay(), getEndDay())
+	fun getSumExpenses(startPeriod:Long, endPeriod:Long):LiveData<Long>{
+		return moneyTrackDao.getSumPeriodOfTime(startPeriod,endPeriod)
 	}
-	fun getSumExpensesToWeek():LiveData<Long>{
-		return moneyTrackDao.getSumPeriodOfTime(getStartWeek(), getEndWeek())
-	}
-	fun getSumExpensesToMonth():LiveData<Long>{
-		return moneyTrackDao.getSumPeriodOfTime(getStartMonth(), getEndMonth())
-	}
-	fun getSumExpensesToYear():LiveData<Long>{
-		return moneyTrackDao.getSumPeriodOfTime(getStartYear(), getEndYear())
-	}
+
 	suspend fun insert(expenses: MoneyTrack) {
 		moneyTrackDao.insert(expenses)
 	}

@@ -1,13 +1,11 @@
 package com.example.moneytracking.ui
 
-import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -16,15 +14,9 @@ import com.example.moneytracking.database.MoneyTrackDatabase
 import com.example.moneytracking.databinding.FragmentMoneyTrackerBinding
 import com.example.moneytracking.viewmodels.moneytrack.MoneyTrackerViewModel
 import com.example.moneytracking.viewmodels.moneytrack.MoneyTrackerViewModelFactory
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.utils.ColorTemplate
-import com.github.mikephil.charting.utils.EntryXComparator
 import com.google.android.material.datepicker.MaterialDatePicker
-import java.util.*
-import kotlin.collections.ArrayList
+import kotlinx.android.synthetic.main.fragment_money_tracker.*
+import java.time.Year
 
 
 class MoneyTrackerFragment : Fragment() {
@@ -61,6 +53,7 @@ class MoneyTrackerFragment : Fragment() {
 		// Specify the current activity as the lifecycle owner of the binding.
 		// This is necessary so that the binding can observe LiveData updates.
 		binding.lifecycleOwner = this
+		binding.piechart.setNoDataText("Нет данных за текущий период")
 
 		binding.btnAddExpenses.setOnClickListener {
 			var categoryExpensesString = binding.menu.editText!!.text.toString()
@@ -86,100 +79,71 @@ class MoneyTrackerFragment : Fragment() {
 			it.hideKeyboard()
 		}
 
-		var toDaySumExpenseGl = 0L
-		moneyTrackViewModel.sumExpenseToDay.observe(viewLifecycleOwner) { sumExpense ->
-			toDaySumExpenseGl = sumExpense ?: 0L
-			binding.textAllSum.text = "Расходы за текущий день: $toDaySumExpenseGl ₽"
+
+
+
+
+
+		fun getExpense(startPeriod:Long, endPeriod:Long, text: String){
+			var sumExpenses = 0L
+			moneyTrackViewModel.getSumExpenses(startPeriod, endPeriod).observe(viewLifecycleOwner) { sumExpense ->
+				sumExpenses = sumExpense ?: 0L
+
+				binding.textAllSum.text = "$text $sumExpenses ₽"
+			}
+			moneyTrackViewModel.getSumCategoryExpenses(startPeriod,endPeriod).observe(viewLifecycleOwner){
+					sumExpense ->
+				getPieDiagram(requireContext(),sumExpense,binding)
+			}
 		}
-		fun getToAllExpense() {
 
-			moneyTrackViewModel.sumExpense.observe(viewLifecycleOwner) { sumExpense ->
-				if(sumExpense.isNotEmpty()){
-				val pieChartSum = binding.piechart
-				val entries: MutableList<PieEntry> = ArrayList()
-				Collections.sort(entries, EntryXComparator())
+		fun showDataRangePicker() {
 
-				sumExpense.forEach { i ->
-					entries.add(PieEntry(i.sumExpense.toFloat(), i.categoryExpense))
-				}
+			val dateRangePicker =
+				MaterialDatePicker
+					.Builder.dateRangePicker()
+					.setTitleText("Select Date")
+					.build()
 
-				val pieDataSet = PieDataSet(entries, null)
-				pieDataSet.setColors(*ColorTemplate.COLORFUL_COLORS + ColorTemplate.MATERIAL_COLORS + ColorTemplate.JOYFUL_COLORS)
-				pieDataSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
-				pieDataSet.valueLinePart1OffsetPercentage = 15f
-				pieDataSet.valueLinePart1Length = 0.1f
-				pieDataSet.valueLinePart2Length = 0.1f
-				pieDataSet.valueTextColor = Color.BLACK
-				pieDataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
-				val pieData = PieData(pieDataSet)
-				pieData.setValueTextSize(14f)
-				pieData.setValueTextColor(Color.BLACK)
-					pieChartSum.setEntryLabelColor(Color.BLACK)
-//					pieChartSum.isDrawHoleEnabled = false
-					pieChartSum.transparentCircleRadius = 55f
-					pieChartSum.holeRadius = 55f
-					pieChartSum.setCenterTextSize(5f)
-					pieChartSum.setDrawCenterText(true)
-					pieChartSum.description.isEnabled = false
-					pieChartSum.legend.formSize = 16f
-					pieChartSum.legend.textColor = Color.BLACK
-					pieChartSum.legend.textSize = 16f
-//					pieChartSum.legend.form = Legend.LegendForm.CIRCLE
-					pieChartSum.legend.xEntrySpace = 3f
-					pieChartSum.legend.yEntrySpace = 3f
-					pieChartSum.legend.isWordWrapEnabled = true
-					pieChartSum.data = pieData
-					pieChartSum.invalidate()
-				}
-				else{
-					Toast.makeText(requireContext(),"Нет данных", Toast.LENGTH_LONG).show()
+
+			dateRangePicker.show(
+				activity!!.supportFragmentManager,
+				"date_range_picker"
+			)
+
+			dateRangePicker.addOnPositiveButtonClickListener { dateSelected ->
+
+				val startDate = dateSelected.first
+				val endDate = dateSelected.second
+
+				if (startDate != null && endDate != null) {
+					var strStartDate = convertLongToDateString(startDate).dropLast(6).replace('-','.')
+					var strEndDate = convertLongToDateString(endDate).dropLast(6).replace('-','.')
+					moneyTrackViewModel.getSumCategoryExpenses(startDate,endDate).observe(viewLifecycleOwner){
+							sumExpense ->
+						getPieDiagram(requireContext(),sumExpense,binding)
+					}
+					getExpense(startDate,endDate,"От $strStartDate по $strEndDate: ")
 				}
 			}
+
 		}
 
-		fun getToDayExpense(){
-			var toDaySumExpense = 0L
-			moneyTrackViewModel.sumExpenseToDay.observe(viewLifecycleOwner) { sumExpense ->
-				toDaySumExpense = sumExpense ?: 0L
-				binding.textAllSum.text = "Расходы за текущий день: $toDaySumExpense ₽"
-			}
-		}
-		fun getToWeekExpense(){
-			var toWeekSumExpense = 0L
-			moneyTrackViewModel.sumExpenseToWeek.observe(viewLifecycleOwner) { sumExpense ->
-				toWeekSumExpense = sumExpense ?: 0L
-				binding.textAllSum.text = "Расходы за неделю: $toWeekSumExpense ₽"
-			}
-		}
-		fun getToMonthExpense(){
-			var toMonthSumExpense = 0L
-			moneyTrackViewModel.sumExpenseToMonth.observe(viewLifecycleOwner) { sumExpense ->
-				toMonthSumExpense = sumExpense ?: 0L
-				binding.textAllSum.text = "Расходы за месяц: $toMonthSumExpense ₽"
-			}
-		}
-		fun getToYearExpense(){
-			var toYearSumExpense = 0L
-			moneyTrackViewModel.sumExpenseToYear.observe(viewLifecycleOwner) { sumExpense ->
-				toYearSumExpense = sumExpense ?: 0L
-				binding.textAllSum.text = "Расходы за год: $toYearSumExpense ₽"
-			}
-		}
-
+		getExpense(getStartMonth(),getEndMonth(), "Итог за месяц: ")
 		binding.btnSelectionToDay.setOnClickListener{
-			getToDayExpense()
+			getExpense(getStartDay(), getEndDay(), "Итог за день: ")
 		}
 		binding.btnSelectionToWeek.setOnClickListener{
-			getToWeekExpense()
+			getExpense(getStartWeek(), getEndWeek(), "Итог за неделю: ")
 		}
 		binding.btnSelectionToMonth.setOnClickListener{
-			getToMonthExpense()
+			getExpense(getStartMonth(), getEndMonth(), "Итог за месяц: ")
 		}
 		binding.btnSelectionToYear.setOnClickListener{
-			getToYearExpense()
+			getExpense(getStartYear(), getEndYear(), "Итог за год: ")
 		}
 		binding.btnAllSumExpense.setOnClickListener {
-			getToAllExpense()
+			showDataRangePicker()
 		}
 
 
@@ -188,6 +152,7 @@ class MoneyTrackerFragment : Fragment() {
 
 		return binding.root
 	}
+
 
 
 }
