@@ -1,4 +1,4 @@
-package com.example.moneytracking.viewmodels.moneytrack
+package com.example.moneytracking.ui.moneytrack
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

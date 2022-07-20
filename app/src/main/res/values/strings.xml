@@ -1,9 +1,24 @@
 <resources>
     <string name="app_name">Money Tracking</string>
+    <!--Money Track Fragment  -->
     <string name="btn_add_expensive">Добавить</string>
     <string name="drop_down_menu_label">Выберите категорию</string>
     <string name="text_field_sum_expense_label">Введите сумму расхода</string>
-    <string name="text_all_expense">Расход за все время:</string>
-    <string name="title"><![CDATA[<h3>Расход за все время:</h3>]]></string>
+    <!--Cost History Fragment  -->
     <string name="type_operation_expense">Расход</string>
+
+    <!--Home Fragment  chip-->
+    <string name="chip_text_today">Сегодня</string>
+    <string name="chip_text_week">Неделя</string>
+    <string name="chip_text_month">Месяц</string>
+    <string name="chip_text_year">Год</string>
+    <string name="chip_text_select_date">Период</string>
+
+    <!--Home Fragment total amount text-->
+    <string name="total_amount_today">Сумма расходов за сегодня:</string>
+    <string name="total_amount_week">Сумма расходов за неделю:</string>
+    <string name="total_amount_month">Сумма расходов за месяц:</string>
+    <string name="total_amount_year">Сумма расходов за год:</string>
+    <string name="total_amount_startPeriod">Сумма расхода от</string>
+    <string name="total_amount_EndPeriod">по</string>
 </resources>

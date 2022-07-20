@@ -3,16 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/moneyTrackerFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/moneyTrackerFragment"
-        android:name="com.example.moneytracking.ui.MoneyTrackerFragment"
-        android:label="Главная"
-        tools:layout="@layout/fragment_money_tracker" />
+        android:name="com.example.moneytracking.ui.moneytrack.MoneyTrackerFragment"
+        android:label="Добавить расход"
+        tools:layout="@layout/fragment_money_tracker" >
+        <action
+            android:id="@+id/action_moneyTrackerFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/costHistoryFragment"
-        android:name="com.example.moneytracking.ui.CostHistoryFragment"
+        android:name="com.example.moneytracking.ui.costhistory.CostHistoryFragment"
         android:label="История расходов"
         tools:layout="@layout/fragment_cost_history" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.moneytracking.ui.home.HomeFragment"
+        android:label="Главная"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_moneyTrackerFragment"
+            app:destination="@id/moneyTrackerFragment"
+            app:launchSingleTop="false"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

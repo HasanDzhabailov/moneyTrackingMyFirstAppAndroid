@@ -1,15 +1,13 @@
 package com.example.moneytracking.repository
 
 import androidx.lifecycle.LiveData
-import com.example.moneytracking.*
-import com.example.moneytracking.database.Category_sum
+import com.example.moneytracking.database.CategorySum
 import com.example.moneytracking.database.MoneyTrack
 import com.example.moneytracking.database.MoneyTrackDatabaseDao
-import java.time.Month
 
 class MoneyRepository(private val moneyTrackDao: MoneyTrackDatabaseDao) {
 	val allExpenses: LiveData<List<MoneyTrack>> = moneyTrackDao.getExpenses()
-	fun getSumCategoryExpenses(startPeriod:Long, endPeriod:Long):LiveData<List<Category_sum>>{
+	fun getSumCategoryExpenses(startPeriod:Long, endPeriod:Long):LiveData<List<CategorySum>>{
 		return moneyTrackDao.getSum(startPeriod, endPeriod)
 	}
 

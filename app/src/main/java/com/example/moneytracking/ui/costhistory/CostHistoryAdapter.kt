@@ -1,17 +1,13 @@
-package com.example.moneytracking.databinding
+package com.example.moneytracking.ui.costhistory
 
-import android.text.TextUtils.replace
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
 import com.example.moneytracking.R
-import com.example.moneytracking.convertLongToDateString
 import com.example.moneytracking.database.MoneyTrack
-import com.example.moneytracking.database.MoneyTrackDatabaseDao
+import com.example.moneytracking.utils.convertLongToDateString
 import kotlinx.android.synthetic.main.cost_history_item.view.*
 
 class CostHistoryAdapter: Adapter<CostHistoryAdapter.ViewHolder>() {

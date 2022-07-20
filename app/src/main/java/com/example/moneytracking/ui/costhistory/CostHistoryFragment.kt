@@ -1,4 +1,4 @@
-package com.example.moneytracking.ui
+package com.example.moneytracking.ui.costhistory
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -11,11 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moneytracking.R
 import com.example.moneytracking.database.MoneyTrackDatabase
-import com.example.moneytracking.databinding.CostHistoryAdapter
 
 import com.example.moneytracking.databinding.FragmentCostHistoryBinding
-import com.example.moneytracking.viewmodels.costhistory.CostHistoryViewModel
-import com.example.moneytracking.viewmodels.costhistory.CostHistoryViewModelFactory
 
 class CostHistoryFragment : Fragment() {
 

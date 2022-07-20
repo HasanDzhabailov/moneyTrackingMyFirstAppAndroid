@@ -1,9 +1,6 @@
-package com.example.moneytracking.viewmodels.costhistory
+package com.example.moneytracking.ui.costhistory
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.moneytracking.database.MoneyTrack
 import com.example.moneytracking.database.MoneyTrackDatabaseDao

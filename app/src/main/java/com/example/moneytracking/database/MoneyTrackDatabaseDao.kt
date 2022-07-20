@@ -5,8 +5,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
-import org.jetbrains.annotations.NotNull
 
 @Dao
 interface MoneyTrackDatabaseDao {
@@ -17,7 +15,7 @@ interface MoneyTrackDatabaseDao {
 	fun getExpenses(): LiveData<List<MoneyTrack>>
 
 	@Query("SELECT category_expense,SUM(sum_expense) as sum from daily_money_expenses_table WHERE  date_expense BETWEEN :startPeriod AND :endPeriod  GROUP BY category_expense")
-	 fun getSum(startPeriod:Long,endPeriod:Long):LiveData<List<Category_sum>>
+	 fun getSum(startPeriod:Long,endPeriod:Long):LiveData<List<CategorySum>>
 
 	@Query("SELECT SUM(sum_expense) from daily_money_expenses_table WHERE  date_expense BETWEEN :startPeriod AND :endPeriod  ")
 	fun getSumPeriodOfTime(startPeriod:Long,endPeriod:Long):LiveData<Long>

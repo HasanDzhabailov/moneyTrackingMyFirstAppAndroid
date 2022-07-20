@@ -6,7 +6,7 @@
     <data>
         <variable
             name="costHistoryViewModel"
-            type="com.example.moneytracking.viewmodels.costhistory.CostHistoryViewModel" />
+            type="com.example.moneytracking.ui.costhistory.CostHistoryViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,8 +1,8 @@
-package com.example.moneytracking.viewmodels.moneytrack
+package com.example.moneytracking.ui.moneytrack
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.moneytracking.database.Category_sum
+import com.example.moneytracking.database.CategorySum
 import com.example.moneytracking.database.MoneyTrack
 import com.example.moneytracking.database.MoneyTrackDatabaseDao
 
@@ -22,12 +22,6 @@ class MoneyTrackerViewModel(
 			val newExpense = MoneyTrack(categoryExpense = categoryExpense, sumExpense = sumExpense)
 			repository.insert(newExpense)
 		}
-	}
-	fun getSumCategoryExpenses(startPeriod:Long, endPeriod:Long): LiveData<List<Category_sum>> {
-		return repository.getSumCategoryExpenses(startPeriod, endPeriod)
-	}
-	fun getSumExpenses(startPeriod:Long, endPeriod:Long): LiveData<Long> {
-		return repository.getSumExpenses(startPeriod, endPeriod)
 	}
 
 }
