@@ -3,10 +3,7 @@ package com.example.moneytracking.utils
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun convertLongToDateString(systemTime: Long): String {
-	return SimpleDateFormat("MM-dd-yyyy HH:mm")
-		.format(systemTime).toString()
-}
+
 
 fun getStartDay(): Long {
 	val c = Calendar.getInstance()

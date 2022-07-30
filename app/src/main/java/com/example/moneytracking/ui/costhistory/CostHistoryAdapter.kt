@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
 import com.example.moneytracking.R
-import com.example.moneytracking.database.MoneyTrack
+import com.example.moneytracking.model.MoneyTrack
 import com.example.moneytracking.utils.convertLongToDateString
 import kotlinx.android.synthetic.main.cost_history_item.view.*
 

@@ -2,8 +2,7 @@ package com.example.moneytracking.ui.moneytrack
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.moneytracking.database.CategorySum
-import com.example.moneytracking.database.MoneyTrack
+import com.example.moneytracking.model.MoneyTrack
 import com.example.moneytracking.database.MoneyTrackDatabaseDao
 
 import com.example.moneytracking.repository.MoneyRepository

@@ -2,7 +2,7 @@ package com.example.moneytracking.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.example.moneytracking.database.CategorySum
+import com.example.moneytracking.model.CategorySum
 import com.example.moneytracking.database.MoneyTrackDatabaseDao
 import com.example.moneytracking.repository.MoneyRepository
 
