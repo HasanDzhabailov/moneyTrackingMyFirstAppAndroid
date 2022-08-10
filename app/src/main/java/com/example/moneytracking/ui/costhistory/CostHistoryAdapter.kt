@@ -47,9 +47,9 @@ class CostHistoryAdapter : Adapter<CostHistoryAdapter.ViewHolder>() {
 		notifyDataSetChanged()
 	}
 
-    fun updateItem(context: Fragment,position: Int){
+    fun updateItem(fragment: Fragment,position: Int){
 	val action =CostHistoryFragmentDirections.actionCostHistoryFragmentToUpdateExpensesFragment(expenseList[position])
-		context.findNavController().navigate(action)
+		fragment.findNavController().navigate(action)
 	}
 	fun deleteItem(position: Int): MoneyTrack {
 		return expenseList[position]

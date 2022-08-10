@@ -23,7 +23,6 @@ import com.google.android.material.datepicker.MaterialDatePicker
 
 
 class CostHistoryFragment : Fragment() {
-	private var toast: Toast? = null
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?,
@@ -49,7 +48,7 @@ class CostHistoryFragment : Fragment() {
 		binding.recyclerViewCostHistory.adapter = adapter
 		binding.recyclerViewCostHistory.layoutManager = LinearLayoutManager(requireContext())
 		binding.recyclerViewCostHistory.addItemDecoration(DividerItemDecoration(requireContext(),DividerItemDecoration.VERTICAL))
-		
+
 
 		 fun deleteButton(position: Int) : SwipeHelper.UnderlayButton {
 			return SwipeHelper.UnderlayButton(
