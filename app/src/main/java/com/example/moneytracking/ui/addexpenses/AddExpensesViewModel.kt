@@ -1,4 +1,4 @@
-package com.example.moneytracking.ui.moneytrack
+package com.example.moneytracking.ui.addexpenses
 
 import android.app.Application
 import androidx.lifecycle.*
@@ -8,7 +8,7 @@ import com.example.moneytracking.database.MoneyTrackDatabaseDao
 import com.example.moneytracking.repository.MoneyRepository
 import kotlinx.coroutines.launch
 
-class MoneyTrackerViewModel(
+class AddExpensesViewModel(
 	dataSource: MoneyTrackDatabaseDao,
 	application: Application,
 ) :

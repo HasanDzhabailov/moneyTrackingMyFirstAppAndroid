@@ -21,4 +21,11 @@ class MoneyRepository(private val moneyTrackDao: MoneyTrackDatabaseDao) {
 		moneyTrackDao.insert(expenses)
 	}
 
+	 suspend fun delete(expenses: MoneyTrack){
+		moneyTrackDao.delete(expenses)
+	}
+
+	suspend fun update(expenses: MoneyTrack){
+		moneyTrackDao.update(expenses)
+	}
 }

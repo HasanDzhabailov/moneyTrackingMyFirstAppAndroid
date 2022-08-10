@@ -1,4 +1,4 @@
-package com.example.moneytracking.ui.moneytrack
+package com.example.moneytracking.ui.addexpenses
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -12,12 +12,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.moneytracking.*
 import com.example.moneytracking.database.MoneyTrackDatabase
-import com.example.moneytracking.databinding.FragmentMoneyTrackerBinding
+import com.example.moneytracking.databinding.FragmentAddExpensesBinding
+
 import com.example.moneytracking.utils.*
-import com.google.android.material.datepicker.MaterialDatePicker
 
 
-class MoneyTrackerFragment : Fragment() {
+class AddExpensesFragment : Fragment() {
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -25,14 +25,14 @@ class MoneyTrackerFragment : Fragment() {
 		savedInstanceState: Bundle?,
 	): View? {
 		// Inflate the layout for this fragment
-		val binding: FragmentMoneyTrackerBinding =
-			DataBindingUtil.inflate(inflater, R.layout.fragment_money_tracker, container, false)
+		val binding: FragmentAddExpensesBinding =
+			DataBindingUtil.inflate(inflater, R.layout.fragment_add_expenses, container, false)
 
 		val application = requireNotNull(this.activity).application
 
 		// Create an instance of the ViewModel Factory.
 		val dataSource = MoneyTrackDatabase.getInstance(application).moneyTrackDatabaseDao
-		val viewModelFactory = MoneyTrackerViewModelFactory(dataSource, application)
+		val viewModelFactory = AddExpensesViewModelFactory(dataSource, application)
 
 		// Create an drop down menu.
 		val categoryExpenses = resources.getStringArray(R.array.expenses)
@@ -42,7 +42,7 @@ class MoneyTrackerFragment : Fragment() {
 
 		// Get a reference to the ViewModel associated with this fragment.
 		val moneyTrackViewModel =
-			ViewModelProvider(this, viewModelFactory).get(MoneyTrackerViewModel::class.java)
+			ViewModelProvider(this, viewModelFactory).get(AddExpensesViewModel::class.java)
 
 		// To use the View Model with data binding, you have to explicitly
 		// give the binding object a reference to it.
@@ -73,7 +73,7 @@ class MoneyTrackerFragment : Fragment() {
 				binding.menu.clearFocus()
 				binding.TextFieldSumExpense.clearFocus()
 			}
-			this.findNavController().navigate(MoneyTrackerFragmentDirections.actionMoneyTrackerFragmentToHomeFragment())
+			this.findNavController().navigate(AddExpensesFragmentDirections.actionMoneyTrackerFragmentToHomeFragment())
 			it.hideKeyboard()
 		}
 

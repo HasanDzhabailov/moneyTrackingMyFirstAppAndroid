@@ -1,11 +1,12 @@
 package com.example.moneytracking.model
 
 
+import android.os.Parcelable
 import androidx.room.*
+import kotlinx.android.parcel.Parcelize
 
 
-
-
+@Parcelize
 @Entity(tableName = "daily_money_expenses_table")
 data class MoneyTrack(
 	@PrimaryKey(autoGenerate = true)
@@ -19,4 +20,4 @@ data class MoneyTrack(
 
 	@ColumnInfo(name = "date_expense")
 	val dateExpense: Long =  System.currentTimeMillis(),
-)
+):Parcelable

@@ -6,19 +6,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+
 import com.example.moneytracking.R
 import com.example.moneytracking.database.MoneyTrackDatabase
 
 import com.example.moneytracking.databinding.FragmentCostHistoryBinding
+
 import com.example.moneytracking.utils.*
 import com.google.android.material.datepicker.MaterialDatePicker
-import kotlinx.android.synthetic.main.fragment_cost_history.*
+
 
 class CostHistoryFragment : Fragment() {
-
+	private var toast: Toast? = null
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?,
@@ -43,9 +48,56 @@ class CostHistoryFragment : Fragment() {
 		val adapter = CostHistoryAdapter()
 		binding.recyclerViewCostHistory.adapter = adapter
 		binding.recyclerViewCostHistory.layoutManager = LinearLayoutManager(requireContext())
+		binding.recyclerViewCostHistory.addItemDecoration(DividerItemDecoration(requireContext(),DividerItemDecoration.VERTICAL))
+		
+
+		 fun deleteButton(position: Int) : SwipeHelper.UnderlayButton {
+			return SwipeHelper.UnderlayButton(
+				requireContext(),
+				"Удалить",
+				14.0f,
+				android.R.color.holo_red_light,
+				object : SwipeHelper.UnderlayButtonClickListener {
+					override fun onClick() {
+						adapter.notifyItemRemoved(position)
+						costHistoryViewModel.delete(adapter.deleteItem(position))
+					}
+				})
+		}
+
+		 fun editButton(position: Int) : SwipeHelper.UnderlayButton {
+			return SwipeHelper.UnderlayButton(
+				requireContext(),
+				"Редактировать",
+				14.0f,
+				android.R.color.holo_green_light,
+				object : SwipeHelper.UnderlayButtonClickListener {
+					override fun onClick() {
+						adapter.updateItem(this@CostHistoryFragment ,position)
+					}
+				})
+		}
+
+
+		val itemTouchHelper = ItemTouchHelper(object : SwipeHelper(binding.recyclerViewCostHistory) {
+			override fun instantiateUnderlayButton(position: Int): List<UnderlayButton> {
+				var buttons = listOf<UnderlayButton>()
+				val deleteButton = deleteButton(position)
+				val markAsUnreadButton = editButton(position)
+				when (position) {
+					position -> buttons = listOf(deleteButton, markAsUnreadButton)
+					else -> Unit
+				}
+				return buttons
+			}
+		})
+		itemTouchHelper.attachToRecyclerView(binding.recyclerViewCostHistory)
+
 		fun getPeriodHistoryExpenses(startPeriod: Long, endPeriod: Long) {
 			costHistoryViewModel.getHistoryExpensesPeriod(startPeriod, endPeriod)
-				.observe(viewLifecycleOwner, Observer { expense -> adapter.setData(expense) })
+				.observe(viewLifecycleOwner, Observer { expense -> adapter.setData(expense)
+				})
+
 		}
 
 		fun showDataRangePicker() {
@@ -86,6 +138,8 @@ class CostHistoryFragment : Fragment() {
 		binding.chipsGroupPeriod.chipSelectDate.setOnClickListener {
 			showDataRangePicker()
 		}
+
+
 		return binding.root
 	}
 }
