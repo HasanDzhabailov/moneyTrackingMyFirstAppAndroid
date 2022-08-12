@@ -7,7 +7,7 @@ import com.example.moneytracking.database.MoneyTrackDatabaseDao
 
 class MoneyRepository(private val moneyTrackDao: MoneyTrackDatabaseDao) {
 	fun getHistoryExpenses(startPeriod:Long,endPeriod:Long): LiveData<List<MoneyTrack>> {
-		return moneyTrackDao.getExpenses(startPeriod,endPeriod)
+		return moneyTrackDao.getExpensesPeriodOfTime(startPeriod,endPeriod)
 	}
 	fun getSumCategoryExpenses(startPeriod:Long, endPeriod:Long):LiveData<List<CategorySum>>{
 		return moneyTrackDao.getSum(startPeriod, endPeriod)

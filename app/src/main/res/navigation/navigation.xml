@@ -43,7 +43,8 @@
 
         <action
             android:id="@+id/action_updateExpensesFragment_to_costHistoryFragment"
-            app:destination="@id/costHistoryFragment" />
+            app:destination="@id/costHistoryFragment"
+            app:popUpToInclusive="false" />
         <argument
             android:name="currentExpenses"
             app:argType="com.example.moneytracking.model.MoneyTrack" />

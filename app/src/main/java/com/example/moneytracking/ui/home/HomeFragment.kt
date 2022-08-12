@@ -65,7 +65,7 @@ class HomeFragment : Fragment() {
 			val dateRangePicker =
 				MaterialDatePicker
 					.Builder.dateRangePicker()
-					.setTitleText("Select Date")
+					.setTitleText("Выберите дату")
 					.build()
 
 

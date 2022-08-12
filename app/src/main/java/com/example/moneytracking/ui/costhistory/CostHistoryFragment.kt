@@ -1,5 +1,6 @@
 package com.example.moneytracking.ui.costhistory
 
+import android.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -41,16 +42,17 @@ class CostHistoryFragment : Fragment() {
 		// give the binding object a reference to it.
 		binding.costHistoryViewModel = costHistoryViewModel
 		// Specify the current activity as the lifecycle owner of the binding.
-		// This is necessary so that the binding can observe LiveData updates.
 		binding.lifecycleOwner = this
 		// Recyclerview
 		val adapter = CostHistoryAdapter()
 		binding.recyclerViewCostHistory.adapter = adapter
 		binding.recyclerViewCostHistory.layoutManager = LinearLayoutManager(requireContext())
-		binding.recyclerViewCostHistory.addItemDecoration(DividerItemDecoration(requireContext(),DividerItemDecoration.VERTICAL))
+		binding.recyclerViewCostHistory.addItemDecoration(DividerItemDecoration(requireContext(),
+			DividerItemDecoration.VERTICAL))
 
 
-		 fun deleteButton(position: Int) : SwipeHelper.UnderlayButton {
+		fun deleteButton(position: Int): SwipeHelper.UnderlayButton {
+
 			return SwipeHelper.UnderlayButton(
 				requireContext(),
 				"Удалить",
@@ -58,13 +60,25 @@ class CostHistoryFragment : Fragment() {
 				android.R.color.holo_red_light,
 				object : SwipeHelper.UnderlayButtonClickListener {
 					override fun onClick() {
-						adapter.notifyItemRemoved(position)
-						costHistoryViewModel.delete(adapter.deleteItem(position))
+						val builderDialog = AlertDialog.Builder(requireContext())
+						builderDialog.setTitle(R.string.dialog_title)
+						builderDialog.setMessage(R.string.dialog_message)
+						builderDialog.setIcon(R.drawable.ic_baseline_delete_24)
+						builderDialog.setPositiveButton("Да") { dialogInterface, which ->
+							adapter.notifyItemRemoved(position)
+							costHistoryViewModel.delete(adapter.deleteItem(position))
+						}
+						builderDialog.setNeutralButton("Отмена") { dialogInterface, which ->
+							dialogInterface.cancel()
+						}
+						val alertDialog: AlertDialog = builderDialog.create()
+						alertDialog.setCancelable(false)
+						alertDialog.show()
 					}
 				})
 		}
 
-		 fun editButton(position: Int) : SwipeHelper.UnderlayButton {
+		fun editButton(position: Int): SwipeHelper.UnderlayButton {
 			return SwipeHelper.UnderlayButton(
 				requireContext(),
 				"Редактировать",
@@ -72,29 +86,31 @@ class CostHistoryFragment : Fragment() {
 				android.R.color.holo_green_light,
 				object : SwipeHelper.UnderlayButtonClickListener {
 					override fun onClick() {
-						adapter.updateItem(this@CostHistoryFragment ,position)
+						adapter.updateItem(this@CostHistoryFragment, position)
 					}
 				})
 		}
 
 
-		val itemTouchHelper = ItemTouchHelper(object : SwipeHelper(binding.recyclerViewCostHistory) {
-			override fun instantiateUnderlayButton(position: Int): List<UnderlayButton> {
-				var buttons = listOf<UnderlayButton>()
-				val deleteButton = deleteButton(position)
-				val markAsUnreadButton = editButton(position)
-				when (position) {
-					position -> buttons = listOf(deleteButton, markAsUnreadButton)
-					else -> Unit
+		val itemTouchHelper =
+			ItemTouchHelper(object : SwipeHelper(binding.recyclerViewCostHistory) {
+				override fun instantiateUnderlayButton(position: Int): List<UnderlayButton> {
+					var buttons = listOf<UnderlayButton>()
+					val deleteButton = deleteButton(position)
+					val markAsUnreadButton = editButton(position)
+					when (position) {
+						position -> buttons = listOf(deleteButton, markAsUnreadButton)
+						else -> Unit
+					}
+					return buttons
 				}
-				return buttons
-			}
-		})
+			})
 		itemTouchHelper.attachToRecyclerView(binding.recyclerViewCostHistory)
 
 		fun getPeriodHistoryExpenses(startPeriod: Long, endPeriod: Long) {
 			costHistoryViewModel.getHistoryExpensesPeriod(startPeriod, endPeriod)
-				.observe(viewLifecycleOwner, Observer { expense -> adapter.setData(expense)
+				.observe(viewLifecycleOwner, Observer { expense ->
+					adapter.setData(expense)
 				})
 
 		}
@@ -103,7 +119,7 @@ class CostHistoryFragment : Fragment() {
 			val dateRangePicker =
 				MaterialDatePicker
 					.Builder.dateRangePicker()
-					.setTitleText("Select Date")
+					.setTitleText("Выберите дату")
 					.build()
 
 			dateRangePicker.show(
@@ -138,7 +154,8 @@ class CostHistoryFragment : Fragment() {
 			showDataRangePicker()
 		}
 
-
 		return binding.root
 	}
+
+
 }

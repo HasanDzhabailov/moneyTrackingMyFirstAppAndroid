@@ -6,7 +6,8 @@
     <string name="text_field_sum_expense_label">Введите сумму расхода</string>
     <!--Cost History Fragment  -->
     <string name="type_operation_expense">Расход</string>
-
+    <string name="dialog_title">Удаление расхода</string>
+    <string name="dialog_message"> Вы уверены что хотите удалить запись?</string>
     <!--Home Fragment  chip-->
     <string name="chip_text_today">Сегодня</string>
     <string name="chip_text_week">Неделя</string>

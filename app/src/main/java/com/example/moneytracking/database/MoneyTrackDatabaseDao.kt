@@ -16,8 +16,7 @@ interface MoneyTrackDatabaseDao {
 	suspend fun delete(expensive: MoneyTrack)
 
 	@Query("SELECT * from daily_money_expenses_table WHERE  date_expense BETWEEN :startPeriod AND :endPeriod ORDER BY date_expense DESC")
-	fun getExpenses(startPeriod:Long,endPeriod:Long): LiveData<List<MoneyTrack>>
-
+	fun getExpensesPeriodOfTime(startPeriod:Long, endPeriod:Long): LiveData<List<MoneyTrack>>
 	@Query("SELECT category_expense,SUM(sum_expense) as sum from daily_money_expenses_table WHERE  date_expense BETWEEN :startPeriod AND :endPeriod  GROUP BY category_expense")
 	 fun getSum(startPeriod:Long,endPeriod:Long):LiveData<List<CategorySum>>
 

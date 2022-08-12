@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 			R.id.homeFragment,
 			R.id.costHistoryFragment,
 			R.id.moneyTrackerFragment,
-
+			R.id.updateExpensesFragment
 
 		))
 		setupActionBarWithNavController(navController, appBarConfiguration)
