@@ -10,8 +10,9 @@ import com.example.moneytracking.repository.MoneyRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CostHistoryViewModel (dataSource: MoneyTrackDatabaseDao) :
+class CostHistoryViewModel @Inject constructor (dataSource: MoneyTrackDatabaseDao) :
 	ViewModel() {
 	val database = dataSource
 	private val repository: MoneyRepository = MoneyRepository(database)

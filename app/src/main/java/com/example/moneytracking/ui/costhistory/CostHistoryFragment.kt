@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -18,26 +19,27 @@ import com.example.moneytracking.R
 import com.example.moneytracking.database.MoneyTrackDatabase
 
 import com.example.moneytracking.databinding.FragmentCostHistoryBinding
+import com.example.moneytracking.di.Injectable
 
 import com.example.moneytracking.utils.*
 import com.google.android.material.datepicker.MaterialDatePicker
+import javax.inject.Inject
 
 
-class CostHistoryFragment : Fragment() {
+class CostHistoryFragment : Fragment(), Injectable {
+	@Inject
+	lateinit var viewModelFactory: ViewModelProvider.Factory
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?,
 	): View? {
 		val binding: FragmentCostHistoryBinding =
 			DataBindingUtil.inflate(inflater, R.layout.fragment_cost_history, container, false)
-		val application = requireNotNull(this.activity).application
 
-		// Create an instance of the ViewModel Factory.
-		val dataSource = MoneyTrackDatabase.getInstance(application).moneyTrackDatabaseDao
-		val viewModelFactory = CostHistoryViewModelFactory(dataSource)
 		// Get a reference to the ViewModel associated with this fragment.
-		val costHistoryViewModel =
-			ViewModelProvider(this, viewModelFactory).get(CostHistoryViewModel::class.java)
+		val costHistoryViewModel:CostHistoryViewModel by viewModels {
+			viewModelFactory
+		}
 		// To use the View Model with data binding, you have to explicitly
 		// give the binding object a reference to it.
 		binding.costHistoryViewModel = costHistoryViewModel

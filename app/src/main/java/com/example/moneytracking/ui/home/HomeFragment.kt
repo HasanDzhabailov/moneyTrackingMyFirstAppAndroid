@@ -8,7 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.moneytracking.R
@@ -16,7 +19,10 @@ import com.example.moneytracking.model.CategorySum
 import com.example.moneytracking.database.MoneyTrackDatabase
 
 import com.example.moneytracking.databinding.FragmentHomeBinding
+import com.example.moneytracking.di.Injectable
+import com.example.moneytracking.ui.addexpenses.AddExpensesViewModel
 import com.example.moneytracking.utils.*
+import com.example.moneytracking.viewmodel.ViewModelFactory
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
@@ -25,22 +31,70 @@ import com.github.mikephil.charting.utils.EntryXComparator
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.android.synthetic.main.chips_filter_period.*
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), Injectable {
+	@Inject
+	lateinit var viewModelFactory: ViewModelProvider.Factory
+	private var binding by autoCleared<FragmentHomeBinding>()
+	// create PieDiagram
+	private fun getPieDiagram(
+		context: Context,
+		sumExpense: List<CategorySum>,
+		binding: FragmentHomeBinding,
+	) {
+		if (sumExpense.isNotEmpty()) {
+			val pieChartSum = binding.piechart
+			val entries: MutableList<PieEntry> = ArrayList()
+			Collections.sort(entries, EntryXComparator())
+
+			sumExpense.forEach { i ->
+				entries.add(PieEntry(i.sumExpense.toFloat(), i.categoryExpense))
+			}
+
+			val pieDataSet = PieDataSet(entries, null)
+
+			pieDataSet.setColors(*ColorTemplate.MATERIAL_COLORS + getColorPieChart())
+			pieDataSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
+			pieDataSet.valueTextColor = Color.BLACK
+			pieDataSet.valueTextSize = 16F
+			val pieData = PieData(pieDataSet)
+			pieChartSum.setEntryLabelTextSize(0F)
+			pieChartSum.transparentCircleRadius = 55f
+			pieChartSum.holeRadius = 55f
+			pieChartSum.description.isEnabled = false
+			pieChartSum.legend.formSize = 16f
+			pieChartSum.legend.textColor = Color.BLACK
+			pieChartSum.legend.textSize = 16f
+			pieChartSum.legend.xEntrySpace = 3f
+			pieChartSum.legend.yEntrySpace = 3f
+			pieChartSum.legend.isWordWrapEnabled = true
+			pieChartSum.data = pieData
+			pieChartSum.setNoDataText("Нет данных за текущий период")
+			pieChartSum.invalidate()
+		} else {
+			val pieChartSum = binding.piechart
+			pieChartSum.clear()
+			Toast.makeText(context, "Нет данных", Toast.LENGTH_LONG).show()
+		}
+
+	}
+
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?,
 	): View? {
-		val binding:FragmentHomeBinding =
-			DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-		val application = requireNotNull(this.activity).application
+		viewModelFactory = this@HomeFragment.viewModelFactory
+		 binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+		return binding.root
+	}
 
-		// Create an instance of the ViewModel Factory.
-		val dataSource = MoneyTrackDatabase.getInstance(application).moneyTrackDatabaseDao
-		val viewModelFactory = HomeViewModelFactory(dataSource)
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+
 		val homeViewModel =
 			ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
 		binding.homeViewModel = homeViewModel
@@ -117,49 +171,6 @@ class HomeFragment : Fragment() {
 			this.findNavController()
 				.navigate(HomeFragmentDirections.actionHomeFragmentToMoneyTrackerFragment())
 		}
-		return binding.root
 	}
-	// create PieDiagram
-	private fun getPieDiagram(
-		context: Context,
-		sumExpense: List<CategorySum>,
-		binding: FragmentHomeBinding,
-	) {
-		if (sumExpense.isNotEmpty()) {
-			val pieChartSum = binding.piechart
-			val entries: MutableList<PieEntry> = ArrayList()
-			Collections.sort(entries, EntryXComparator())
-
-			sumExpense.forEach { i ->
-				entries.add(PieEntry(i.sumExpense.toFloat(), i.categoryExpense))
-			}
-
-			val pieDataSet = PieDataSet(entries, null)
-
-			pieDataSet.setColors(*ColorTemplate.MATERIAL_COLORS + getColorPieChart())
-			pieDataSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
-			pieDataSet.valueTextColor = Color.BLACK
-			pieDataSet.valueTextSize = 16F
-			val pieData = PieData(pieDataSet)
-			pieChartSum.setEntryLabelTextSize(0F)
-			pieChartSum.transparentCircleRadius = 55f
-			pieChartSum.holeRadius = 55f
-			pieChartSum.description.isEnabled = false
-			pieChartSum.legend.formSize = 16f
-			pieChartSum.legend.textColor = Color.BLACK
-			pieChartSum.legend.textSize = 16f
-			pieChartSum.legend.xEntrySpace = 3f
-			pieChartSum.legend.yEntrySpace = 3f
-			pieChartSum.legend.isWordWrapEnabled = true
-			pieChartSum.data = pieData
-			pieChartSum.setNoDataText("Нет данных за текущий период")
-			pieChartSum.invalidate()
-		} else {
-			val pieChartSum = binding.piechart
-			pieChartSum.clear()
-			Toast.makeText(context, "Нет данных", Toast.LENGTH_LONG).show()
-		}
-	}
-
 
 }

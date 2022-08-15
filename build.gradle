@@ -8,8 +8,9 @@ buildscript {
         gradleVersion = '4.0.1'
         navigationVersion = '1.0.0'
         fragment_version = '1.4.1'
-        lifecycle_version = "2.5.0-rc02"
+
         paging_version = "3.1.1"
+        dagger_version = '2.43.2'
 
         dataBindingCompilerVersion = gradleVersion // Always need to be the same.
         // testing

@@ -8,17 +8,21 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.moneytracking.*
-import com.example.moneytracking.database.MoneyTrackDatabase
+
 import com.example.moneytracking.databinding.FragmentAddExpensesBinding
+import com.example.moneytracking.di.Injectable
 
 import com.example.moneytracking.utils.*
+import javax.inject.Inject
 
 
-class AddExpensesFragment : Fragment() {
-
+class AddExpensesFragment : Fragment(), Injectable {
+@Inject
+lateinit var viewModelFactory: ViewModelProvider.Factory
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -28,12 +32,6 @@ class AddExpensesFragment : Fragment() {
 		val binding: FragmentAddExpensesBinding =
 			DataBindingUtil.inflate(inflater, R.layout.fragment_add_expenses, container, false)
 
-		val application = requireNotNull(this.activity).application
-
-		// Create an instance of the ViewModel Factory.
-		val dataSource = MoneyTrackDatabase.getInstance(application).moneyTrackDatabaseDao
-		val viewModelFactory = AddExpensesViewModelFactory(dataSource, application)
-
 		// Create an drop down menu.
 		val categoryExpenses = resources.getStringArray(R.array.expenses)
 		val adapter =
@@ -41,12 +39,14 @@ class AddExpensesFragment : Fragment() {
 		binding.AutoCompleteTextView.setAdapter(adapter)
 
 		// Get a reference to the ViewModel associated with this fragment.
-		val moneyTrackViewModel =
-			ViewModelProvider(this, viewModelFactory).get(AddExpensesViewModel::class.java)
+		val addExpensesViewModel: AddExpensesViewModel by viewModels {
+			viewModelFactory
+		}
+
 
 		// To use the View Model with data binding, you have to explicitly
 		// give the binding object a reference to it.
-		binding.moneyTrackViewModel = moneyTrackViewModel
+		binding.addExpensesViewModel = addExpensesViewModel
 
 		// Specify the current activity as the lifecycle owner of the binding.
 		// This is necessary so that the binding can observe LiveData updates.
@@ -65,7 +65,7 @@ class AddExpensesFragment : Fragment() {
 				binding.menu.isErrorEnabled = false
 				binding.TextFieldSumExpense.isErrorEnabled = false
 
-				moneyTrackViewModel.addExpenses(categoryExpensesString, sumExpenseString.toLong())
+				addExpensesViewModel.addExpenses(categoryExpensesString, sumExpenseString.toLong())
 
 				binding.menu.editText?.text?.clear()
 				binding.textSumExpense.text?.clear()

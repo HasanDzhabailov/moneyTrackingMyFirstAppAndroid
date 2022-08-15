@@ -7,8 +7,9 @@ import com.example.moneytracking.database.MoneyTrackDatabaseDao
 
 import com.example.moneytracking.repository.MoneyRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AddExpensesViewModel(
+class AddExpensesViewModel @Inject constructor(
 	dataSource: MoneyTrackDatabaseDao,
 	application: Application,
 ) :

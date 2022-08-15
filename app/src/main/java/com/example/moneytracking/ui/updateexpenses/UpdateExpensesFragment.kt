@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -15,13 +16,16 @@ import com.example.moneytracking.R
 import com.example.moneytracking.database.MoneyTrackDatabase
 
 import com.example.moneytracking.databinding.FragmentUpdateExpensesBinding
+import com.example.moneytracking.di.Injectable
 
 import com.example.moneytracking.utils.hideKeyboard
+import javax.inject.Inject
 
 
-class UpdateExpensesFragment : Fragment() {
+class UpdateExpensesFragment : Fragment(), Injectable {
 	private val args by navArgs<UpdateExpensesFragmentArgs>()
-
+	@Inject
+	lateinit var viewModelFactory: ViewModelProvider.Factory
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?,
@@ -29,11 +33,9 @@ class UpdateExpensesFragment : Fragment() {
 		val binding: FragmentUpdateExpensesBinding =
 			DataBindingUtil.inflate(inflater, R.layout.fragment_update_expenses, container, false)
 
-		val application = requireNotNull(this.activity).application
-		val dataSource = MoneyTrackDatabase.getInstance(application).moneyTrackDatabaseDao
-		val viewModelFactory = UpdateExpensesViewModelFactory(dataSource)
-		val updateExpensesViewModel =
-			ViewModelProvider(this, viewModelFactory).get(UpdateExpensesViewModel::class.java)
+		val updateExpensesViewModel:UpdateExpensesViewModel by viewModels {
+			viewModelFactory
+		}
 		binding.updateExpensesViewModel = updateExpensesViewModel
 		binding.lifecycleOwner = this
 		// Create an drop down menu.

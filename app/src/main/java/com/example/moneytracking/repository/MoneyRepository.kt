@@ -4,8 +4,11 @@ import androidx.lifecycle.LiveData
 import com.example.moneytracking.model.CategorySum
 import com.example.moneytracking.model.MoneyTrack
 import com.example.moneytracking.database.MoneyTrackDatabaseDao
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class MoneyRepository(private val moneyTrackDao: MoneyTrackDatabaseDao) {
+@Singleton
+class MoneyRepository @Inject constructor(private val moneyTrackDao: MoneyTrackDatabaseDao) {
 	fun getHistoryExpenses(startPeriod:Long,endPeriod:Long): LiveData<List<MoneyTrack>> {
 		return moneyTrackDao.getExpensesPeriodOfTime(startPeriod,endPeriod)
 	}

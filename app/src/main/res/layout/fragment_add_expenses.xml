@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="moneyTrackViewModel"
+            name="addExpensesViewModel"
             type="com.example.moneytracking.ui.addexpenses.AddExpensesViewModel" />
     </data>
 

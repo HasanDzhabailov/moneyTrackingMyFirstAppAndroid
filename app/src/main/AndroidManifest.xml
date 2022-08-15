@@ -3,6 +3,7 @@
     package="com.example.moneytracking">
 
     <application
+        android:name=".MoneyTrackApp"
         android:allowBackup="true"
 
         android:label="@string/app_name"
