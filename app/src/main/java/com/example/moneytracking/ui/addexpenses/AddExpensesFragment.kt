@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.moneytracking.*
 
 import com.example.moneytracking.databinding.FragmentAddExpensesBinding
+import com.example.moneytracking.databinding.FragmentCostHistoryBinding
 import com.example.moneytracking.di.Injectable
 
 import com.example.moneytracking.utils.*
@@ -23,15 +24,22 @@ import javax.inject.Inject
 class AddExpensesFragment : Fragment(), Injectable {
 @Inject
 lateinit var viewModelFactory: ViewModelProvider.Factory
+private var binding by autoCleared<FragmentAddExpensesBinding>()
+
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?,
 	): View? {
 		// Inflate the layout for this fragment
-		val binding: FragmentAddExpensesBinding =
+		 binding =
 			DataBindingUtil.inflate(inflater, R.layout.fragment_add_expenses, container, false)
 
+		return binding.root
+	}
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
 		// Create an drop down menu.
 		val categoryExpenses = resources.getStringArray(R.array.expenses)
 		val adapter =
@@ -76,8 +84,6 @@ lateinit var viewModelFactory: ViewModelProvider.Factory
 			this.findNavController().navigate(AddExpensesFragmentDirections.actionMoneyTrackerFragmentToHomeFragment())
 			it.hideKeyboard()
 		}
-
-		return binding.root
 	}
 
 }
