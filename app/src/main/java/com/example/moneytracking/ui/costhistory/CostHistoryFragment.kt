@@ -19,6 +19,7 @@ import com.example.moneytracking.R
 import com.example.moneytracking.database.MoneyTrackDatabase
 
 import com.example.moneytracking.databinding.FragmentCostHistoryBinding
+import com.example.moneytracking.databinding.FragmentHomeBinding
 import com.example.moneytracking.di.Injectable
 
 import com.example.moneytracking.utils.*
@@ -29,15 +30,22 @@ import javax.inject.Inject
 class CostHistoryFragment : Fragment(), Injectable {
 	@Inject
 	lateinit var viewModelFactory: ViewModelProvider.Factory
+
+	private var binding by autoCleared<FragmentCostHistoryBinding>()
+
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?,
 	): View? {
-		val binding: FragmentCostHistoryBinding =
+		binding =
 			DataBindingUtil.inflate(inflater, R.layout.fragment_cost_history, container, false)
+		return binding.root
+	}
 
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
 		// Get a reference to the ViewModel associated with this fragment.
-		val costHistoryViewModel:CostHistoryViewModel by viewModels {
+		val costHistoryViewModel: CostHistoryViewModel by viewModels {
 			viewModelFactory
 		}
 		// To use the View Model with data binding, you have to explicitly
@@ -155,9 +163,6 @@ class CostHistoryFragment : Fragment(), Injectable {
 		binding.chipsGroupPeriod.chipSelectDate.setOnClickListener {
 			showDataRangePicker()
 		}
-
-		return binding.root
 	}
-
 
 }

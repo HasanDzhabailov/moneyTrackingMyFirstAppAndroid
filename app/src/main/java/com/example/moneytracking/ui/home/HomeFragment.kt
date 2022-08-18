@@ -38,12 +38,13 @@ import kotlin.collections.ArrayList
 class HomeFragment : Fragment(), Injectable {
 	@Inject
 	lateinit var viewModelFactory: ViewModelProvider.Factory
+
 	private var binding by autoCleared<FragmentHomeBinding>()
+
 	// create PieDiagram
 	private fun getPieDiagram(
 		context: Context,
 		sumExpense: List<CategorySum>,
-		binding: FragmentHomeBinding,
 	) {
 		if (sumExpense.isNotEmpty()) {
 			val pieChartSum = binding.piechart
@@ -53,13 +54,12 @@ class HomeFragment : Fragment(), Injectable {
 			sumExpense.forEach { i ->
 				entries.add(PieEntry(i.sumExpense.toFloat(), i.categoryExpense))
 			}
-
 			val pieDataSet = PieDataSet(entries, null)
-
 			pieDataSet.setColors(*ColorTemplate.MATERIAL_COLORS + getColorPieChart())
 			pieDataSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
 			pieDataSet.valueTextColor = Color.BLACK
 			pieDataSet.valueTextSize = 16F
+
 			val pieData = PieData(pieDataSet)
 			pieChartSum.setEntryLabelTextSize(0F)
 			pieChartSum.transparentCircleRadius = 55f
@@ -96,10 +96,11 @@ class HomeFragment : Fragment(), Injectable {
 		super.onViewCreated(view, savedInstanceState)
 
 		val homeViewModel =
-			ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
+			ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
 		binding.homeViewModel = homeViewModel
 		binding.lifecycleOwner = this
 		binding.piechart.setNoDataText("Нет данных за текущий период")
+
 		fun getExpense(startPeriod: Long, endPeriod: Long, text: String) {
 			var sumExpenses = 0L
 			homeViewModel.getSumExpenses(startPeriod, endPeriod)
@@ -110,18 +111,16 @@ class HomeFragment : Fragment(), Injectable {
 				}
 			homeViewModel.getSumCategoryExpenses(startPeriod, endPeriod)
 				.observe(viewLifecycleOwner) { sumExpense ->
-					getPieDiagram(requireContext(), sumExpense, binding)
+					getPieDiagram(requireContext(), sumExpense)
 				}
 		}
 
 		fun showDataRangePicker() {
-
 			val dateRangePicker =
 				MaterialDatePicker
 					.Builder.dateRangePicker()
 					.setTitleText("Выберите дату")
 					.build()
-
 
 			dateRangePicker.show(
 				activity!!.supportFragmentManager,
@@ -139,7 +138,7 @@ class HomeFragment : Fragment(), Injectable {
 					var strEndDate = convertLongToDateString(endDate).dropLast(6).replace('-', '.')
 					homeViewModel.getSumCategoryExpenses(startDate, endDate)
 						.observe(viewLifecycleOwner) { sumExpense ->
-							getPieDiagram(requireContext(), sumExpense, binding)
+							getPieDiagram(requireContext(), sumExpense)
 						}
 					getExpense(startDate,
 						endDate,
@@ -148,8 +147,8 @@ class HomeFragment : Fragment(), Injectable {
 						} $strEndDate:")
 				}
 			}
-
 		}
+
 		getExpense(getStartMonth(), getEndMonth(), "${getString(R.string.total_amount_month)}")
 		binding.chipsGroup.chipToday.setOnClickListener {
 			getExpense(getStartDay(), getEndDay(), "${getString(R.string.total_amount_today)}")
@@ -172,5 +171,4 @@ class HomeFragment : Fragment(), Injectable {
 				.navigate(HomeFragmentDirections.actionHomeFragmentToMoneyTrackerFragment())
 		}
 	}
-
 }

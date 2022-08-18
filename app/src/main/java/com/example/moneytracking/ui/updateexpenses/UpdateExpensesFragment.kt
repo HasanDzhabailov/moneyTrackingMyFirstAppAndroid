@@ -14,9 +14,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.moneytracking.R
 import com.example.moneytracking.database.MoneyTrackDatabase
+import com.example.moneytracking.databinding.FragmentCostHistoryBinding
 
 import com.example.moneytracking.databinding.FragmentUpdateExpensesBinding
 import com.example.moneytracking.di.Injectable
+import com.example.moneytracking.utils.autoCleared
 
 import com.example.moneytracking.utils.hideKeyboard
 import javax.inject.Inject
@@ -24,16 +26,23 @@ import javax.inject.Inject
 
 class UpdateExpensesFragment : Fragment(), Injectable {
 	private val args by navArgs<UpdateExpensesFragmentArgs>()
+
 	@Inject
 	lateinit var viewModelFactory: ViewModelProvider.Factory
+	private var binding by autoCleared<FragmentUpdateExpensesBinding>()
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?,
 	): View? {
-		val binding: FragmentUpdateExpensesBinding =
+		binding =
 			DataBindingUtil.inflate(inflater, R.layout.fragment_update_expenses, container, false)
 
-		val updateExpensesViewModel:UpdateExpensesViewModel by viewModels {
+		return binding.root
+	}
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+		val updateExpensesViewModel: UpdateExpensesViewModel by viewModels {
 			viewModelFactory
 		}
 		binding.updateExpensesViewModel = updateExpensesViewModel
@@ -73,7 +82,6 @@ class UpdateExpensesFragment : Fragment(), Injectable {
 				.navigate(UpdateExpensesFragmentDirections.actionUpdateExpensesFragmentToCostHistoryFragment())
 			it.hideKeyboard()
 		}
-		return binding.root
 	}
 
 }
