@@ -7,9 +7,9 @@
 <img src="https://github.com/HasanDzhabailov/moneyTrackingMyFirstAppAndroid/blob/main/ReadmeResourse/costhistory.png"/>
 <h3 align="center">Добавить расход</h3>
 <img src="https://github.com/HasanDzhabailov/moneyTrackingMyFirstAppAndroid/blob/main/ReadmeResourse/addExpensive.png"/>
-<h3>Удалить расход</h3>
+<h3>Удалить запись расхода</h3>
 <img alt="Удаление записи расхода" src="https://github.com/HasanDzhabailov/moneyTrackingMyFirstAppAndroid/blob/main/ReadmeResourse/delete%20element.gif"/>
-<h3>Обновить расход</h3>
+<h3>Редактировать запись расхода</h3>
 <img alt="Редактирование записи расхода" src="https://github.com/HasanDzhabailov/moneyTrackingMyFirstAppAndroid/blob/main/ReadmeResourse/update%20element.gif"/>
 
 
