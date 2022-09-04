@@ -7,19 +7,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.moneytracking.R
-import com.example.moneytracking.database.MoneyTrackDatabase
+
 
 import com.example.moneytracking.databinding.FragmentCostHistoryBinding
-import com.example.moneytracking.databinding.FragmentHomeBinding
 import com.example.moneytracking.di.Injectable
 
 import com.example.moneytracking.utils.*
@@ -36,7 +35,7 @@ class CostHistoryFragment : Fragment(), Injectable {
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?,
-	): View? {
+	): View {
 		binding =
 			DataBindingUtil.inflate(inflater, R.layout.fragment_cost_history, container, false)
 		return binding.root
@@ -74,11 +73,11 @@ class CostHistoryFragment : Fragment(), Injectable {
 						builderDialog.setTitle(R.string.dialog_title)
 						builderDialog.setMessage(R.string.dialog_message)
 						builderDialog.setIcon(R.drawable.ic_baseline_delete_24)
-						builderDialog.setPositiveButton("Да") { dialogInterface, which ->
+						builderDialog.setPositiveButton("Да") { _, _ ->
 							adapter.notifyItemRemoved(position)
 							costHistoryViewModel.delete(adapter.deleteItem(position))
 						}
-						builderDialog.setNeutralButton("Отмена") { dialogInterface, which ->
+						builderDialog.setNeutralButton("Отмена") { dialogInterface, _ ->
 							dialogInterface.cancel()
 						}
 						val alertDialog: AlertDialog = builderDialog.create()
@@ -119,9 +118,9 @@ class CostHistoryFragment : Fragment(), Injectable {
 
 		fun getPeriodHistoryExpenses(startPeriod: Long, endPeriod: Long) {
 			costHistoryViewModel.getHistoryExpensesPeriod(startPeriod, endPeriod)
-				.observe(viewLifecycleOwner, Observer { expense ->
+				.observe(viewLifecycleOwner) { expense ->
 					adapter.setData(expense)
-				})
+				}
 
 		}
 

@@ -10,12 +10,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class UpdateExpensesViewModel  @Inject constructor (dataSource: MoneyTrackDatabaseDao): ViewModel() {
-	val database = dataSource
-	private val repository: MoneyRepository = MoneyRepository(database)
-	fun updateExpenses(expenseId:Long,categoryExpense: String, sumExpense: Long, dateExpense:Long) {
-		CoroutineScope(Dispatchers.IO).launch  {
-			val newExpense = MoneyTrack(expenseId = expenseId, categoryExpense = categoryExpense, sumExpense = sumExpense, dateExpense = dateExpense)
+class UpdateExpensesViewModel @Inject constructor(dataSource: MoneyTrackDatabaseDao) : ViewModel() {
+	private val repository: MoneyRepository = MoneyRepository(dataSource)
+	fun updateExpenses(
+		expenseId: Long,
+		categoryExpense: String,
+		sumExpense: Long,
+		dateExpense: Long,
+	) {
+		CoroutineScope(Dispatchers.IO).launch {
+			val newExpense = MoneyTrack(expenseId = expenseId,
+				categoryExpense = categoryExpense,
+				sumExpense = sumExpense,
+				dateExpense = dateExpense)
 			repository.update(newExpense)
 		}
 	}

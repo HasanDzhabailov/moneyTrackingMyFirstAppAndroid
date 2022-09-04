@@ -13,8 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.moneytracking.R
-import com.example.moneytracking.database.MoneyTrackDatabase
-import com.example.moneytracking.databinding.FragmentCostHistoryBinding
+
 
 import com.example.moneytracking.databinding.FragmentUpdateExpensesBinding
 import com.example.moneytracking.di.Injectable
@@ -33,7 +32,7 @@ class UpdateExpensesFragment : Fragment(), Injectable {
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?,
-	): View? {
+	): View {
 		binding =
 			DataBindingUtil.inflate(inflater, R.layout.fragment_update_expenses, container, false)
 
@@ -56,8 +55,8 @@ class UpdateExpensesFragment : Fragment(), Injectable {
 
 		binding.textSumExpense.setText(args.currentExpenses.sumExpense.toString())
 		binding.btnUpdateExpenses.setOnClickListener {
-			var categoryExpensesString = binding.AutoCompleteTextView.text.toString()
-			var sumExpenseString = binding.textSumExpense.text.toString()
+			val categoryExpensesString = binding.AutoCompleteTextView.text.toString()
+			val sumExpenseString = binding.textSumExpense.text.toString()
 
 			if (TextUtils.isEmpty(categoryExpensesString)) {
 				binding.menu.error = "Заполните поле"

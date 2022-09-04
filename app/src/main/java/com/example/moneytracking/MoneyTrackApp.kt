@@ -1,6 +1,6 @@
 package com.example.moneytracking
 
-import android.app.Activity
+
 import android.app.Application
 import com.example.moneytracking.di.AppInjector
 import dagger.android.AndroidInjector

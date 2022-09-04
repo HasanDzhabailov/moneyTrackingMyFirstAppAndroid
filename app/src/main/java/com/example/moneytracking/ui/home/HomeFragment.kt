@@ -10,26 +10,20 @@ import android.view.ViewGroup
 import android.widget.Toast
 
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
+
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.moneytracking.R
 import com.example.moneytracking.model.CategorySum
-import com.example.moneytracking.database.MoneyTrackDatabase
-
 import com.example.moneytracking.databinding.FragmentHomeBinding
 import com.example.moneytracking.di.Injectable
-import com.example.moneytracking.ui.addexpenses.AddExpensesViewModel
 import com.example.moneytracking.utils.*
-import com.example.moneytracking.viewmodel.ViewModelFactory
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.EntryXComparator
 import com.google.android.material.datepicker.MaterialDatePicker
-import kotlinx.android.synthetic.main.chips_filter_period.*
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -86,8 +80,7 @@ class HomeFragment : Fragment(), Injectable {
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?,
-	): View? {
-		viewModelFactory = this@HomeFragment.viewModelFactory
+	): View {
 		 binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 		return binding.root
 	}
@@ -102,7 +95,7 @@ class HomeFragment : Fragment(), Injectable {
 		binding.piechart.setNoDataText("Нет данных за текущий период")
 
 		fun getExpense(startPeriod: Long, endPeriod: Long, text: String) {
-			var sumExpenses = 0L
+			var sumExpenses: Long
 			homeViewModel.getSumExpenses(startPeriod, endPeriod)
 				.observe(viewLifecycleOwner) { sumExpense ->
 					sumExpenses = sumExpense ?: 0L
@@ -133,9 +126,9 @@ class HomeFragment : Fragment(), Injectable {
 				val endDate = dateSelected.second
 
 				if (startDate != null && endDate != null) {
-					var strStartDate =
+					val strStartDate =
 						convertLongToDateString(startDate).dropLast(6).replace('-', '.')
-					var strEndDate = convertLongToDateString(endDate).dropLast(6).replace('-', '.')
+					val strEndDate = convertLongToDateString(endDate).dropLast(6).replace('-', '.')
 					homeViewModel.getSumCategoryExpenses(startDate, endDate)
 						.observe(viewLifecycleOwner) { sumExpense ->
 							getPieDiagram(requireContext(), sumExpense)
@@ -149,18 +142,18 @@ class HomeFragment : Fragment(), Injectable {
 			}
 		}
 
-		getExpense(getStartMonth(), getEndMonth(), "${getString(R.string.total_amount_month)}")
+		getExpense(getStartMonth(), getEndMonth(), getString(R.string.total_amount_month))
 		binding.chipsGroup.chipToday.setOnClickListener {
-			getExpense(getStartDay(), getEndDay(), "${getString(R.string.total_amount_today)}")
+			getExpense(getStartDay(), getEndDay(), getString(R.string.total_amount_today))
 		}
 		binding.chipsGroup.chipWeek.setOnClickListener {
-			getExpense(getStartWeek(), getEndWeek(), "${getString(R.string.total_amount_week)}")
+			getExpense(getStartWeek(), getEndWeek(), getString(R.string.total_amount_week))
 		}
 		binding.chipsGroup.chipMonth.setOnClickListener {
-			getExpense(getStartMonth(), getEndMonth(), "${getString(R.string.total_amount_month)}")
+			getExpense(getStartMonth(), getEndMonth(), getString(R.string.total_amount_month))
 		}
 		binding.chipsGroup. chipYear.setOnClickListener {
-			getExpense(getStartYear(), getEndYear(), "${getString(R.string.total_amount_year)}")
+			getExpense(getStartYear(), getEndYear(), getString(R.string.total_amount_year))
 		}
 		binding.chipsGroup.chipSelectDate.setOnClickListener {
 			showDataRangePicker()

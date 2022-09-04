@@ -1,27 +1,26 @@
 package com.example.moneytracking.ui.costhistory
 
-import android.content.Context
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.navigation.Navigation
+
 import androidx.navigation.fragment.findNavController
 
-import androidx.recyclerview.widget.ItemTouchHelper
+
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
 import com.example.moneytracking.R
 import com.example.moneytracking.model.MoneyTrack
-import com.example.moneytracking.repository.MoneyRepository
+
 import com.example.moneytracking.utils.convertLongToDateString
 import kotlinx.android.synthetic.main.cost_history_item.view.*
 
 class CostHistoryAdapter : Adapter<CostHistoryAdapter.ViewHolder>() {
 	private var expenseList = emptyList<MoneyTrack>()
 
-	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {}
+	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 		return ViewHolder(LayoutInflater.from(parent.context)
