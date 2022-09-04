@@ -1,11 +1,25 @@
 <h1 align="center">Ассаламу алейкум меня зовут <a href="https://t.me/hasanandroidblog" target="_blank">Хасан</a> 
 <img src="https://github.com/blackcater/blackcater/raw/main/images/Hi.gif" height="32"/></h1>
-<h3 align="center">Моей первое android приложение Money Tracking</h3>
-![Главный экран](https://github.com/HasanDzhabailov/moneyTrackingMyFirstAppAndroid/blob/main/ReadmeResourse/homeScreen.png?raw=true)
-![История расходов](https://github.com/HasanDzhabailov/moneyTrackingMyFirstAppAndroid/blob/main/ReadmeResourse/costhistory.png?raw=true)
-![Добавить расход](https://github.com/HasanDzhabailov/moneyTrackingMyFirstAppAndroid/blob/main/ReadmeResourse/addExpensive.png?raw=true)
-![](https://github.com/HasanDzhabailov/moneyTrackingMyFirstAppAndroid/blob/main/ReadmeResourse/delete%20element.gif?raw=true)
-![](https://github.com/HasanDzhabailov/moneyTrackingMyFirstAppAndroid/blob/main/ReadmeResourse/update%20element.gif?raw=true)
+<h3 align="center">Моё приложение Money Tracking</h3>
+<div>
+<img src="https://github.com/HasanDzhabailov/moneyTrackingMyFirstAppAndroid/blob/main/ReadmeResourse/homeScreen.png" width="300"/>
+
+<img src="https://github.com/HasanDzhabailov/moneyTrackingMyFirstAppAndroid/blob/main/ReadmeResourse/costhistory.png" width="300"/>
+
+<img src="https://github.com/HasanDzhabailov/moneyTrackingMyFirstAppAndroid/blob/main/ReadmeResourse/addExpensive.png" width="300"/>
+
+
+
+https://user-images.githubusercontent.com/51163032/187194012-15763cd2-fca8-4350-aacb-479f83e115cd.mp4
+
+
+
+https://user-images.githubusercontent.com/51163032/187194002-5452e3b7-13bc-467a-b3cb-86d59a2f52e8.mp4
+
+
+
+
+</div>
 
 
 
