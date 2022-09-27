@@ -1,6 +1,20 @@
 <h1 align="center">Ассаламу алейкум меня зовут <a href="https://t.me/hasanandroidblog" target="_blank">Хасан</a> 
 <img src="https://github.com/blackcater/blackcater/raw/main/images/Hi.gif" height="32"/></h1>
 <h3 align="center">Моё приложение Money Tracking</h3>
+<h3>Tech stack</h3>
+<ul>
+<li>Kotlin based, Coroutines + LiveData for asynchronous</li>
+<li>Dagger for dependency injection</li>
+
+<li>Jetpack: </li>
+  <ul>
+  <li>Lifecycle</li>
+  <li>ViewModel</li>
+  <li>Room</li>
+  </ul>
+<li> Architecture: MVVM Architecture </li>
+<li> Navigation Component</li>
+</ul>
 <div>
 <img src="https://github.com/HasanDzhabailov/moneyTrackingMyFirstAppAndroid/blob/main/ReadmeResourse/homeScreen.png" width="300"/>
 
